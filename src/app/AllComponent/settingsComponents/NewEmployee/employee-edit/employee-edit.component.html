@@ -1,0 +1,97 @@
+
+<h3 style="text-align:center;color:cadetblue;font-family:Tahoma">Employee Info Edit </h3>
+
+<br />
+<form class="example-container" [formGroup]="Forms">
+  <div class="col-md-12" >
+    <mat-tab-group mat-stretch-tabs class="example-stretched-tabs " #matgroup>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          Employee Edit
+        </ng-template>
+        <mat-form-field floatLabel="options.value.floatLabel">
+          <mat-label>Employee Name</mat-label>
+          <input matInput placeholder="Name" type="Text" formControlName="employeename" required>
+        </mat-form-field>
+        <mat-form-field floatLabel="options.value.floatLabel">
+          <mat-label>Employee Id</mat-label>
+          <input matInput placeholder="Id" type="Text" formControlName="employeid" required>
+        </mat-form-field>
+        <mat-form-field floatLabel="options.value.floatLabel">
+          <mat-label>Phone Number</mat-label>
+          <input matInput placeholder="Phone" type="Text" formControlName="phone" required>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Role</mat-label>
+          <select matNativeControl formControlName="roleId" name="Role" required>
+
+            <option *ngFor="let car of roles" [value]="car.id">
+              {{car.rolename}}
+            </option>
+          </select>
+          <mat-error *ngIf="selectFormControl.hasError('required')">
+            This field is required
+          </mat-error>
+          <mat-hint>Pick a role</mat-hint>
+        </mat-form-field>
+        <br/>
+        <mat-form-field floatLabel="options.value.floatLabel">
+          <mat-label>Other Info</mat-label>
+          <input matInput placeholder="price" type="Text" formControlName="otherinfo">
+        </mat-form-field>
+        <button mat-raised-button style="width:100%" color="warn" (click)='matgroup.selectedIndex = 1'>Go Next</button>
+      </mat-tab>
+
+      <mat-tab>
+        <ng-template mat-tab-label>
+          Detail
+        </ng-template>
+        <mat-form-field floatLabel="options.value.floatLabel">
+          <mat-label>Salray</mat-label>
+          <input matInput placeholder="Salary" type="Number" formControlName="salary" >
+        </mat-form-field>
+        <mat-form-field floatLabel="options.value.floatLabel">
+          <mat-label>Absent Deduction</mat-label>
+          <input matInput placeholder="Absent Deduction" type="Number" formControlName="absentDeduction" >
+        </mat-form-field>
+        <mat-form-field floatLabel="options.value.floatLabel">
+          <mat-label>Designation</mat-label>
+          <input matInput placeholder="Designation" type="Text" formControlName="designation" >
+        </mat-form-field>
+        <mat-form-field floatLabel="options.value.floatLabel">
+          <mat-label>Joining Date</mat-label>
+          <input matInput placeholder="Joining Date" type="date" formControlName="joiningDate" >
+        </mat-form-field>
+        <mat-form-field floatLabel="options.value.floatLabel">
+          <mat-label>Catagory</mat-label>
+          <input matInput placeholder="Catagory" type="Text" formControlName="catagory" >
+        </mat-form-field>
+        <mat-form-field floatLabel="options.value.floatLabel">
+          <mat-label>E-mail</mat-label>
+          <input matInput placeholder="E-mail" type="Text" formControlName="email">
+        </mat-form-field>
+        <mat-form-field floatLabel="options.value.floatLabel">
+          <mat-label>Password</mat-label>
+          <input matInput placeholder="password" type="password" formControlName="password">
+        </mat-form-field>
+        <button mat-raised-button style="width:100%" color="warn" (click)='matgroup.selectedIndex = 2'>Go Next</button>
+      </mat-tab>
+
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon>thumb_down</mat-icon> Upload
+        </ng-template>
+
+        <app-file-upload [filenameinput]="filenameinput1" [preVal]="_file1id" (picidVal)="file1id($event)"></app-file-upload>
+        <br/>
+
+        <div class="input-group btn-group">
+          <button type="submit" (click)="FormSubmit()" class="form-control btn" style="height:40px;width:425px;background-color:black;color:whitesmoke" [disabled]="!Forms.valid">Submit</button>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</form>
+
+<br /><br />
+

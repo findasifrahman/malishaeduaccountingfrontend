@@ -1,0 +1,38 @@
+  <app-navbar></app-navbar>
+  <br/>
+  <br/>
+  <br/>
+  <div style="text-align:center">
+
+    <h3 style="color:royalblue;font-weight:bolder;font-family:Tahoma">
+      Please Login
+    </h3>
+  </div>
+
+  <div fxLayoutAlign="center">
+    <mat-card class="my-card mat-elevation-z8" style="color:black" color="accent">
+      <mat-card-content>
+        <form class="my-form" [formGroup]="Forms">
+          <mat-form-field  class="full-width">
+            <mat-label >Email</mat-label>
+            <input  matInput placeholder="Email"  name="email" formControlName="username">
+          </mat-form-field>
+          <mat-form-field class="full-width">
+            <mat-label>Password</mat-label>
+            <input matInput placeholder="Password" name="password" formControlName="password">
+          </mat-form-field>
+        </form>
+      </mat-card-content>
+      <mat-card-actions fxLayoutAlign="center">
+        <button mat-raised-button (click)="FormSubmit()" color="accent" [disabled]="!Forms.valid">LOGIN</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+  <br/> <br/>
+  <div fxLayoutAlign="center">
+    <ngb-alert [dismissible]="false" style="text-align:center; width: 30%;font-size: smaller;" type="primary" > Developed By @Intricate Lab -- 2019 </ngb-alert>
+  </div>
+  <br/>
+
+
+

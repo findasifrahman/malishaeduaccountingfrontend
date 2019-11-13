@@ -1,0 +1,80 @@
+
+<h3 style="text-align:center;color:cadetblue;font-family:Tahoma">Edit Payroll Allocation </h3>
+
+<br />
+<form class="example-container" [formGroup]="Forms">
+  <div class="col-md-12" >
+    <mat-tab-group mat-stretch-tabs class="example-stretched-tabs " #matgroup>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          Employee Details
+        </ng-template>
+        <mat-form-field>
+          <mat-label>Select Employee Id</mat-label>
+          <select matNativeControl formControlName="employeeid" name="employeeid" required>
+            <option *ngFor="let car of employee" [value]="car.employeid">
+              {{car.employeid}}
+            </option>
+          </select>
+          <mat-error *ngIf="selectFormControl.hasError('required')">
+            This field is required
+          </mat-error>
+          <mat-hint>Pick an ID</mat-hint>
+        </mat-form-field>
+        <br/>
+        <mat-form-field floatLabel="options.value.floatLabel">
+          <mat-label>Employee Name</mat-label>
+          <input matInput placeholder="Employee Name" type="Text" formControlName="employeename" required>
+        </mat-form-field>
+        <mat-form-field floatLabel="options.value.floatLabel">
+          <mat-label>Date</mat-label>
+          <input matInput placeholder="Date" type="date" formControlName="date" required>
+        </mat-form-field>
+        <mat-form-field floatLabel="options.value.floatLabel">
+          <mat-label>Additional Info</mat-label>
+          <input matInput placeholder="Additional Info" type="Text" formControlName="additionalInfo" required>
+        </mat-form-field>
+        <button mat-raised-button style="width:100%" color="warn" (click)='matgroup.selectedIndex = 1'>Go Next</button>
+      </mat-tab>
+
+      <mat-tab>
+        <ng-template mat-tab-label>
+          Salary
+        </ng-template>
+        <mat-form-field floatLabel="options.value.floatLabel">
+          <mat-label>Allocated Salay</mat-label>
+          <input matInput placeholder="Allocated Salay" type="Number" formControlName="allocatedSalay" >
+        </mat-form-field>
+        <mat-form-field floatLabel="options.value.floatLabel">
+          <mat-label>Bonus</mat-label>
+          <input matInput placeholder="Bonus" type="Number" formControlName="bonus" >
+        </mat-form-field>
+        <mat-form-field floatLabel="options.value.floatLabel">
+          <mat-label>Absent Days</mat-label>
+          <input matInput placeholder="Absent Days" type="Number" formControlName="absentDays" >
+        </mat-form-field>
+        <mat-form-field floatLabel="options.value.floatLabel">
+          <mat-label>Late Days</mat-label>
+          <input matInput placeholder="Late Days" type="Number" formControlName="lateDays" >
+        </mat-form-field>
+        <mat-form-field floatLabel="options.value.floatLabel">
+          <mat-label>Other Deduction</mat-label>
+          <input matInput placeholder="Other Deduction" type="Number" formControlName="otherDeduction" >
+        </mat-form-field>
+        <mat-form-field floatLabel="options.value.floatLabel">
+          <mat-label>Salary Payable</mat-label>
+          <input matInput placeholder="Salary Payable" type="Number" formControlName="SalaryPayable" >
+        </mat-form-field>
+        <div class="input-group btn-group">
+          <button type="submit" (click)="FormSubmit()" class="form-control btn" style="height:40px;width:425px;background-color:black;color:whitesmoke" [disabled]="!Forms.valid">Submit</button>
+        </div>
+      </mat-tab>
+
+
+    </mat-tab-group>
+  </div>
+</form>
+
+<br /><br />
+
+

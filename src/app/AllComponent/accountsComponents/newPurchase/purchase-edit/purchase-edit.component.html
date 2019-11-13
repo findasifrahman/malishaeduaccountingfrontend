@@ -1,0 +1,73 @@
+
+<h3 style="text-align:center;color:cadetblue;font-family:Tahoma">Edit Purchase Bill </h3>
+
+<br />
+<form class="example-container" [formGroup]="Forms">
+  <div class="col-md-12" >
+    <mat-tab-group mat-stretch-tabs class="example-stretched-tabs " #matgroup>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          Purchase Item Detail
+        </ng-template>
+        <mat-form-field floatLabel="options.value.floatLabel">
+          <mat-label>Voucher No</mat-label>
+          <input matInput placeholder="Id" type="Text" formControlName="serialid" required>
+        </mat-form-field>
+        <mat-form-field floatLabel="options.value.floatLabel">
+          <mat-label>Purchased Person</mat-label>
+          <input matInput placeholder="Purchased By" type="Text" formControlName="purchasedby" required>
+        </mat-form-field>
+        <mat-form-field floatLabel="options.value.floatLabel">
+          <mat-label>date</mat-label>
+          <input matInput placeholder="Phone" type="date" formControlName="date" required>
+        </mat-form-field>
+
+        <app-select-search [formControlnam]="'clientId'" [preVal]="selectsearchval1" (outputval)="SelectvalChanged1($event)"  [list]= "clientlist"></app-select-search>
+        <app-select-search [formControlnam]="'clientname'"  [preVal]="selectsearchval3"  (outputval)="SelectvalChanged3($event)"  [list]= "clientlist"></app-select-search>
+
+        <br/>
+        <mat-form-field floatLabel="options.value.floatLabel">
+          <mat-label>Additional Info</mat-label>
+          <input matInput placeholder="Issued By" type="Text" formControlName="additionalInfo" required>
+        </mat-form-field>
+        <button mat-raised-button style="width:100%" color="warn" (click)='matgroup.selectedIndex = 1'>Go Next</button>
+      </mat-tab>
+
+      <mat-tab>
+        <ng-template mat-tab-label>
+          price
+        </ng-template>
+        <app-select-search [formControlnam]="'incomesourcename'" [preVal]="selectsearchval2" (outputval)="SelectvalChanged2($event)"  [list]= "incomeTypelist"></app-select-search>
+
+        <br/>
+        <mat-form-field floatLabel="options.value.floatLabel">
+          <mat-label>Price</mat-label>
+          <input matInput placeholder="Price" type="Number" formControlName="price" >
+        </mat-form-field>
+        <mat-form-field floatLabel="options.value.floatLabel">
+          <mat-label>Quantity</mat-label>
+          <input matInput placeholder="Quantity" type="Number" formControlName="quantity" >
+        </mat-form-field>
+        <mat-form-field floatLabel="options.value.floatLabel">
+          <mat-label>Additional Price</mat-label>
+          <input matInput placeholder="Additional Price" type="Number" formControlName="additionalPrice" >
+        </mat-form-field>
+        <mat-form-field floatLabel="options.value.floatLabel">
+          <mat-label>Discount</mat-label>
+          <input matInput placeholder="Discount" type="Number" formControlName="discount" >
+        </mat-form-field>
+        <mat-form-field floatLabel="options.value.floatLabel">
+          <mat-label>Toal Price</mat-label>
+          <input matInput placeholder="totalPrice" type="Number" formControlName="totalPrice" >
+        </mat-form-field>
+        <div class="input-group btn-group">
+          <button type="submit" (click)="FormSubmit()" class="form-control btn" style="height:40px;width:425px;background-color:black;color:whitesmoke" [disabled]="!Forms.valid">Submit</button>
+        </div>
+      </mat-tab>
+
+    </mat-tab-group>
+  </div>
+
+</form>
+
+<br /><br />

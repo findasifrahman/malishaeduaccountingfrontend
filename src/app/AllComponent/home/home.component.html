@@ -1,0 +1,8 @@
+
+<div class="container row">
+    <ngb-alert [dismissible]="false" style="text-align:center; width: 90%;" type="primary" > Welcome to Malisha Edu Accounting & HR Software DashBoard</ngb-alert>
+    <br/>
+
+    <app-dashboar-comp [hidden]='dontshow' [fromDate]="ffromDate" [toDate]="ttoDate" [tableDataShow]="'false'"></app-dashboar-comp>
+    <ngb-alert [hidden]='dontshow' [dismissible]="false" style="text-align:center; width: 90%;font-size: small;" type="primary" > This Months Sales and accounting is given above. You didnot set any limit </ngb-alert>
+</div>

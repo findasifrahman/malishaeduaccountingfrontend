@@ -1,0 +1,19 @@
+
+  <nav class='sticky navbar navbar-expand-xl  navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow sticky-top'style="margin-bottom:0px !important;padding-bottom:0 !important">
+    <a class="navbar-brand" style="color:greenyellow;font-weight:bold;font-size:14" [routerLink]='["/"]'>Malisha Edu</a>
+    <button class="navbar-toggler" type="button"  (click)="toggle()">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="navbar-collapse collapse flex-sm-row-reverse" [ngClass]='{"show": isExpanded}'>
+      <ul class="navbar-nav flex-grow-0">
+        <li class="nav-item"  [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
+          <a class="nav-link text-light" (click)="toggle()" style="font-size:12px" [routerLink]='["/"]'>(+86) 18613114366
+            |
+            info@malishaedu.com
+            </a>
+        </li>
+
+      </ul>
+    </div>
+</nav>
+

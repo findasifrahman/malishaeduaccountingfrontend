@@ -1,0 +1,70 @@
+
+<h3 style="text-align:center;color:cadetblue;font-family:Tahoma">Edit Office Item </h3>
+
+<br />
+<form class="example-container" [formGroup]="Forms">
+  <div class="col-md-12" >
+    <mat-tab-group mat-stretch-tabs class="example-stretched-tabs " #matgroup>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          Office Item Add
+        </ng-template>
+        <mat-form-field>
+          <mat-label>Item Name</mat-label>
+          <select matNativeControl formControlName="itemname" name="itemname" required>
+            <option *ngFor="let car of itemname" [value]="car.inventoryitemname">
+              {{car.inventoryitemname}}
+            </option>
+          </select>
+          <mat-error *ngIf="selectFormControl.hasError('required')">
+            This field is required
+          </mat-error>
+          <mat-hint>Pick a Item</mat-hint>
+        </mat-form-field>
+        <br/>
+        <mat-form-field floatLabel="options.value.floatLabel">
+          <mat-label>Item Id</mat-label>
+          <input matInput placeholder="Item Id" type="Text" formControlName="itemid" required>
+        </mat-form-field>
+        <mat-form-field floatLabel="options.value.floatLabel">
+          <mat-label>Date</mat-label>
+          <input matInput placeholder="Date" type="date" formControlName="date" required>
+        </mat-form-field>
+        <mat-form-field floatLabel="options.value.floatLabel">
+          <mat-label>Other Info</mat-label>
+          <input matInput placeholder="Other Info" type="Text" formControlName="otherinfo" required>
+        </mat-form-field>
+        <button mat-raised-button style="width:100%" color="warn" (click)='matgroup.selectedIndex = 1'>Go Next</button>
+      </mat-tab>
+
+      <mat-tab>
+        <ng-template mat-tab-label>
+          Price
+        </ng-template>
+        <mat-form-field floatLabel="options.value.floatLabel">
+          <mat-label>Unit Price</mat-label>
+          <input matInput placeholder="Unit Price" type="Number" formControlName="unitPrice" >
+        </mat-form-field>
+        <mat-form-field floatLabel="options.value.floatLabel">
+          <mat-label>Additionaal Price</mat-label>
+          <input matInput placeholder="Additional Price" type="Number" formControlName="additionalPrice" >
+        </mat-form-field>
+        <mat-form-field floatLabel="options.value.floatLabel">
+          <mat-label>Quantity</mat-label>
+          <input matInput placeholder="Quantity" type="Number" formControlName="quantity" >
+        </mat-form-field>
+        <mat-form-field floatLabel="options.value.floatLabel">
+          <mat-label>Total Price</mat-label>
+          <input matInput placeholder="Total Price" type="Number" formControlName="totalPrice" >
+        </mat-form-field>
+        <div class="input-group btn-group">
+          <button type="submit" (click)="FormSubmit()" class="form-control btn" style="height:40px;width:425px;background-color:black;color:whitesmoke" [disabled]="!Forms.valid">Submit</button>
+        </div>
+      </mat-tab>
+
+
+    </mat-tab-group>
+  </div>
+</form>
+
+<br /><br />

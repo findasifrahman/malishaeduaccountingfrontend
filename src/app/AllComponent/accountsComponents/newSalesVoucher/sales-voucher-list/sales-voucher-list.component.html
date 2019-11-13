@@ -1,0 +1,70 @@
+
+<div fxLayout fxLayoutAlign="center center">
+  <mat-form-field fxFlex="40%">
+    <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Filter">
+  </mat-form-field>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <mat-table [dataSource]="AllElement" multiTemplateDataRows class="mat-elevation-z8">
+      <!-- Position Column -->
+      <ng-container matColumnDef="voucherid">
+        <mat-header-cell *matHeaderCellDef> Voucher Id </mat-header-cell>
+        <mat-cell style="color:whitesmoke" *matCellDef="let Element"> {{Element.voucherid}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="issuedemployee">
+        <mat-header-cell *matHeaderCellDef> Issued By  </mat-header-cell>
+        <mat-cell style="color:whitesmoke" *matCellDef="let Element"> {{Element.issuedemployee}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="date">
+        <mat-header-cell *matHeaderCellDef> Date </mat-header-cell>
+        <mat-cell style="color:whitesmoke" *matCellDef="let Element"> {{Element.date}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="clientName">
+        <mat-header-cell *matHeaderCellDef>Client Name </mat-header-cell>
+        <mat-cell style="color:whitesmoke" *matCellDef="let Element"> {{Element.clientName}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="incomeType">
+        <mat-header-cell *matHeaderCellDef>Income Type </mat-header-cell>
+        <mat-cell style="color:whitesmoke" *matCellDef="let Element"> {{Element.incomeType}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="totalAmount">
+        <mat-header-cell *matHeaderCellDef>Total </mat-header-cell>
+        <mat-cell style="color:whitesmoke" *matCellDef="let Element"> {{Element.totalAmount}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="paidAmount">
+        <mat-header-cell *matHeaderCellDef>Paid </mat-header-cell>
+        <mat-cell style="color:whitesmoke" *matCellDef="let Element"> {{Element.paidAmount}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="currentdues">
+        <mat-header-cell *matHeaderCellDef>Dues </mat-header-cell>
+        <mat-cell style="color:whitesmoke" *matCellDef="let Element"> {{Element.currentdues}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="buttons">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let AllElement" (click)="$event.stopPropagation()">
+          <button mat-button color="warn" (click)="onDelete(AllElement.id)">
+            <mat-icon>delete</mat-icon>
+          </button>
+          <button mat-button color="warn" (click)="onUpdate(AllElement.id)">
+            <mat-icon>update</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+      <mat-row style="background-color:black" *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+    </mat-table>
+    <mat-paginator [pageSize]="10" [pageSizeOptions]="[2, 4, 6, 10, 20]"></mat-paginator>
+  </div>
+</div>
+
+<br />
+<br />
+
+
+
+
+

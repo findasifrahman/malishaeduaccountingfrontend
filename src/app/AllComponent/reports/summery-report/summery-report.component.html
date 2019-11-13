@@ -1,0 +1,24 @@
+
+<ngb-alert [dismissible]="false" style="text-align:center;" type="success" > {{companyName}} </ngb-alert>
+
+<div  style="display: flex;justify-content: center;">
+  <div class='col-xl-5 col-lg-6'>
+    <mat-form-field class="example-full-width">
+      <input matInput [matDatepickerFilter]="myFilter" [(ngModel)]="fromDate" name="myDate" [matDatepicker]="picker" placeholder="From">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+  </div>
+  <div class='col-xl-3 col-lg-6'>
+    <mat-form-field class="example-full-width">
+      <input matInput [matDatepickerFilter]="myFilter" [(ngModel)]="toDate" name="myDate2" [matDatepicker]="picker2" placeholder="To">
+      <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+      <mat-datepicker #picker2></mat-datepicker>
+    </mat-form-field>
+  </div>
+  <div class='col-xl-4 col-lg-6'>
+    <button mat-stroked-button   color="warn" (click)='onSubmit()' style="padding-top: 12px;padding-bottom: 5px;" >Choose Date & View Report</button>
+  </div>
+</div>
+
+<app-dashboar-comp [fromDate]="ffromDate" [toDate]="ttoDate" [tableDataShow]="'true'"></app-dashboar-comp>
