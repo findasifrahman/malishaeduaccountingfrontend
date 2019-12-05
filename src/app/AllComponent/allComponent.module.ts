@@ -21,6 +21,7 @@ import { officeCostModule } from './officecostComponent/office-cost.module'
 
 
 import { AdminlayoutComponent } from '../commonLayout/adminlayout/adminlayout.component';
+
 import { WithoutSidebarlayoutComponent } from '../commonLayout/withoutSidebarlayout/without-sidebarlayout/without-sidebarlayout.component';
 
 import { CompanyEditComponent } from './settingsComponents/NewCompany/company-edit/company-edit.component';
@@ -61,6 +62,28 @@ import { DashboarCompComponent } from './reports/dashboar-comp/dashboar-comp.com
 import { OfficeCostAddComponent } from './officecostComponent/office-cost-add/office-cost-add.component';
 import { OfficeCostEditComponent } from './officecostComponent/office-cost-edit/office-cost-edit.component';
 import { OfficeCostListComponent } from './officecostComponent/office-cost-list/office-cost-list.component';
+import { ClientGroupAddComponent } from './settingsComponents/NewClientGroup/client-group-add/client-group-add.component';
+import { ClientGroupEditComponent } from './settingsComponents/NewClientGroup/client-group-edit/client-group-edit.component';
+import { ClientGroupListComponent } from './settingsComponents/NewClientGroup/client-group-list/client-group-list.component';
+import { PurposeListComponent } from './settingsComponents/NewPurpose/purpose-list/purpose-list.component';
+import { PurposeAddComponent } from './settingsComponents/NewPurpose/purpose-add/purpose-add.component';
+import { PurposeEditComponent } from './settingsComponents/NewPurpose/purpose-edit/purpose-edit.component';
+import { SalesCommissionEditComponent } from './accountsComponents/newSalesCommission/sales-commission-edit/sales-commission-edit.component';
+import { SalesCommissionAddComponent } from './accountsComponents/newSalesCommission/sales-commission-add/sales-commission-add.component';
+import { SalesCommissionListComponent } from './accountsComponents/newSalesCommission/sales-commission-list/sales-commission-list.component';
+import { SalesRecieptAddComponent } from './accountsComponents/newSalesReciept/sales-reciept-add/sales-reciept-add.component';
+import { SalesRecieptEditComponent } from './accountsComponents/newSalesReciept/sales-reciept-edit/sales-reciept-edit.component';
+import { SalesRecieptListComponent } from './accountsComponents/newSalesReciept/sales-reciept-list/sales-reciept-list.component';
+import { salesrecieptmodels } from '../models/salesrecieptmodels';
+import { MajorAddComponent } from './settingsComponents/NewMajor/major-add/major-add.component';
+import { MajorListComponent } from './settingsComponents/NewMajor/major-list/major-list.component';
+import { NationalityAddComponent } from './settingsComponents/NewNationality/nationality-add/nationality-add.component';
+import { NationalityListComponent } from './settingsComponents/NewNationality/nationality-list/nationality-list.component';
+import { UniversityListComponent } from './settingsComponents/NewUniversity/university-list/university-list.component';
+import { UniversityAddComponent } from './settingsComponents/NewUniversity/university-add/university-add.component';
+import { SalesTableComponent } from './reports/tables/sales-table/sales-table.component';
+import { DegreeListComponent } from './settingsComponents/NewDegree/degree-list/degree-list.component';
+import { DegreeAddComponent } from './settingsComponents/NewDegree/degree-add/degree-add.component';
 
 const routes: Routes = [
 
@@ -73,7 +96,7 @@ const routes: Routes = [
     children:[
       { path: 'company/add', component: CompanyAddComponent,canActivate: [RoleGuard],
           data: {
-            expectedRole: ['admin']
+            expectedRole: ['admin','accounts','hr']
           }
       },
       { path: 'company/edit/:id', component: CompanyEditComponent,canActivate: [RoleGuard],
@@ -82,7 +105,7 @@ const routes: Routes = [
           }},
       { path: 'company/list', component: CompanyListComponent,canActivate: [RoleGuard],
           data: {
-            expectedRole: ['admin']
+            expectedRole: ['admin','accounts','hr','counselor']
           }},
       { path: 'employee/add', component: EmployeeAddComponent,canActivate: [RoleGuard],
       data: {
@@ -153,13 +176,39 @@ const routes: Routes = [
       }},
       { path: 'salesVoucher/list', component: SalesVoucherListComponent,canActivate: [RoleGuard],
       data: {
-        expectedRole: ['admin','accounts']
+        expectedRole: ['admin']
       }},
       { path: 'salesVoucher/edit/:id', component: SalesVoucherEditComponent,canActivate: [RoleGuard],
       data: {
         expectedRole: ['admin','accounts']
       }},
 
+      { path: 'salesreciept/add', component: SalesRecieptAddComponent,canActivate: [RoleGuard],
+      data: {
+        expectedRole: ['admin','accounts']
+      }},
+      { path: 'salesreciept/list', component: SalesRecieptListComponent,canActivate: [RoleGuard],
+      data: {
+        expectedRole: ['admin']
+      }},
+      { path: 'salesreciept/edit/:id', component: SalesRecieptEditComponent,canActivate: [RoleGuard],
+      data: {
+        expectedRole: ['admin','accounts']
+      }},
+
+
+      { path: 'clientgroup/add', component: ClientGroupAddComponent,canActivate: [RoleGuard],
+      data: {
+        expectedRole: ['admin','accounts']
+      }},
+      { path: 'clientgroup/edit/:id', component: ClientGroupEditComponent,canActivate: [RoleGuard],
+      data: {
+        expectedRole: ['admin','accounts']
+      }},
+      { path: 'clientgroup/list', component: ClientGroupListComponent,canActivate: [RoleGuard],
+      data: {
+        expectedRole: ['admin','accounts']
+      }},
       { path: 'client/add', component: ClientAddComponent,canActivate: [RoleGuard],
       data: {
         expectedRole: ['admin','accounts']
@@ -188,7 +237,7 @@ const routes: Routes = [
 
       { path: 'summeryReport', component: SummeryReportComponent,canActivate: [RoleGuard],
       data: {
-        expectedRole: ['admin']
+        expectedRole: ['admin','counselor']
       }},
 
       { path: 'officecost/add', component: OfficeCostAddComponent,canActivate: [RoleGuard],
@@ -202,6 +251,64 @@ const routes: Routes = [
       { path: 'officecost/edit/:id', component: OfficeCostEditComponent,canActivate: [RoleGuard],
       data: {
         expectedRole: ['admin','hr']
+      }},
+
+      { path: 'purpose/add', component: PurposeAddComponent,canActivate: [RoleGuard],
+      data: {
+        expectedRole: ['admin']
+      }},
+      { path: 'purpose/list', component: PurposeListComponent,canActivate: [RoleGuard],
+      data: {
+        expectedRole: ['admin']
+      }},
+      { path: 'purpose/edit/:id', component: PurposeEditComponent,canActivate: [RoleGuard],
+      data: {
+        expectedRole: ['admin']
+      }},
+      { path: 'salescommission/add', component: SalesCommissionAddComponent,canActivate: [RoleGuard],
+      data: {
+        expectedRole: ['admin']
+      }},
+      { path: 'salescommission/list', component: SalesCommissionListComponent,canActivate: [RoleGuard],
+      data: {
+        expectedRole: ['admin']
+      }},
+      { path: 'salescommission/edit/:id', component: SalesCommissionEditComponent,canActivate: [RoleGuard],
+      data: {
+        expectedRole: ['admin']
+      }},
+
+      { path: 'major/add', component: MajorAddComponent,canActivate: [RoleGuard],
+      data: {
+        expectedRole: ['admin']
+      }},
+      { path: 'major/list', component: MajorListComponent,canActivate: [RoleGuard],
+      data: {
+        expectedRole: ['admin']
+      }},
+      { path: 'nationality/add', component: NationalityAddComponent,canActivate: [RoleGuard],
+      data: {
+        expectedRole: ['admin']
+      }},
+      { path: 'nationality/list', component: NationalityListComponent,canActivate: [RoleGuard],
+      data: {
+        expectedRole: ['admin']
+      }},
+      { path: 'university/add', component: UniversityAddComponent,canActivate: [RoleGuard],
+      data: {
+        expectedRole: ['admin']
+      }},
+      { path: 'university/list', component: UniversityListComponent,canActivate: [RoleGuard],
+      data: {
+        expectedRole: ['admin']
+      }},
+      { path: 'degree/add', component: DegreeAddComponent,canActivate: [RoleGuard],
+      data: {
+        expectedRole: ['admin']
+      }},
+      { path: 'degree/list', component: DegreeListComponent,canActivate: [RoleGuard],
+      data: {
+        expectedRole: ['admin']
       }},
       ]
     },
@@ -219,7 +326,11 @@ const routes: Routes = [
     SalesVoucherAddComponent, SalesVoucherEditComponent, SalesVoucherListComponent,
     ClientAddComponent, ClientEditComponent, ClientListComponent,
     PurchaseAddComponent, PurchaseEditComponent, PurchaseListComponent, SummeryReportComponent, DashboarCompComponent,
-    OfficeCostAddComponent, OfficeCostEditComponent, OfficeCostListComponent],
+    OfficeCostAddComponent, OfficeCostEditComponent, OfficeCostListComponent, ClientGroupAddComponent, ClientGroupEditComponent, ClientGroupListComponent,
+    PurposeListComponent, PurposeAddComponent, PurposeEditComponent, SalesCommissionEditComponent, SalesCommissionAddComponent, SalesCommissionListComponent,
+    SalesRecieptAddComponent, SalesRecieptEditComponent, SalesRecieptListComponent,
+    MajorAddComponent, MajorListComponent, NationalityAddComponent, NationalityListComponent, UniversityListComponent, UniversityAddComponent, SalesTableComponent,
+    DegreeListComponent, DegreeAddComponent],
 
   imports: [CommonModule,FormsModule,RouterModule.forChild(routes),SharedComponentmoduleModule,
     ReactiveFormsModule,HttpClientModule,CKEditorModule,SharedmodulesModule,
@@ -235,7 +346,12 @@ const routes: Routes = [
   SalesVoucherAddComponent, SalesVoucherEditComponent, SalesVoucherListComponent,
   ClientAddComponent, ClientEditComponent, ClientListComponent,
   PurchaseAddComponent, PurchaseEditComponent, PurchaseListComponent, SummeryReportComponent, DashboarCompComponent,
-  OfficeCostAddComponent, OfficeCostEditComponent, OfficeCostListComponent],
+  OfficeCostAddComponent, OfficeCostEditComponent, OfficeCostListComponent,
+  ClientGroupAddComponent, ClientGroupEditComponent, ClientGroupListComponent,
+  PurposeListComponent, PurposeAddComponent, PurposeEditComponent, SalesCommissionEditComponent, SalesCommissionAddComponent, SalesCommissionListComponent,
+  SalesRecieptAddComponent, SalesRecieptEditComponent, SalesRecieptListComponent,
+  MajorAddComponent, MajorListComponent, NationalityAddComponent, NationalityListComponent, UniversityListComponent, UniversityAddComponent,
+  DegreeListComponent, DegreeAddComponent],
  providers: [AuthGuard,RoleGuard]
 
 })

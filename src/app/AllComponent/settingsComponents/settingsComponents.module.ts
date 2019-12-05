@@ -13,7 +13,12 @@ import { incomesourcemodels} from '../../models/incomesourcemodels';
 import { officialexpendituremodels } from '../../models/officialexpendituremodels';
 import { inventoryitemmodels } from '../../models/inventoryitemmodels';
 import { clientmodels } from '../../models/clientmodels';
-
+import { clientgroupmodels} from '../../models/clientgroupmodels';
+import { purposemodels } from '../../models/purposemodels'
+import { majormodels } from '../../models/majormodels'
+import { nationalitymodels } from '../../models/nationalitymodels'
+import { universitymodels } from '../../models/universitymodels'
+import { degreemodels } from '../../models/degreemodels'
 import { SharedComponentmoduleModule } from '../../sharedComponentModule/shared-componentmodule.module';
 import { AdminlayoutComponent } from '../../commonLayout/adminlayout/adminlayout.component';
 
@@ -27,7 +32,8 @@ const routes: Routes = [
   declarations:[],
   imports: [CommonModule,FormsModule,//RouterModule.forChild(routes),
    ReactiveFormsModule,HttpClientModule,SharedmodulesModule,companymodels,employeemodelsform,inventoryitemmodels,
-   rolemodels,incomesourcemodels,officialexpendituremodels,CKEditorModule,clientmodels,
+   majormodels,nationalitymodels,universitymodels,degreemodels,
+   rolemodels,incomesourcemodels,clientgroupmodels,purposemodels,officialexpendituremodels,CKEditorModule,clientmodels,
    SharedComponentmoduleModule],
   exports: []
  })

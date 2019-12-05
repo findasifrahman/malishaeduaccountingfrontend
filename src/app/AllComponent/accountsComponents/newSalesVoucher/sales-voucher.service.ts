@@ -22,18 +22,32 @@ export class SalesVoucherService {
     return this.http.get<any>(routeurls.BASE_API_URL + routeurls.SALES_VOUCHER_API_BASE_URL).pipe(
       retry(3),
       map(res => {
-        console.log(res);
+        //console.log(res);
         if (!res) {
           throw new Error('Value expected!');
         }
-        console.log(res);
+        //console.log(res);
         return res;
       }),
       catchError(err => of([]))
     );//.pipe(map(response => response as productmodels));//.subscribe(result => {console.log(result);});
   }
-  getbyClient(clientName: any): Observable<any> {
-    return this.http.get<any>(routeurls.BASE_API_URL + routeurls.SALES_VOUCHER_API_BASE_URL, { params: new HttpParams().set('idclientName', clientName) }).pipe(
+  getbystudent(clientName: any): Observable<any> {
+    return this.http.get<any>(routeurls.BASE_API_URL + routeurls.SALES_VOUCHER_API_BASE_URL + "/getbystudent", { params: new HttpParams().set('studentname', clientName) }).pipe(
+      retry(3),
+      map(res => {
+        //console.log(res);
+        if (!res) {
+          throw new Error('Value expected!');
+        }
+        //console.log(res);
+        return res;
+      }),
+      catchError(err => of([]))
+    );
+  }
+  getbyclientstudent(clientName: any,student): Observable<any> {
+    return this.http.get<any>(routeurls.BASE_API_URL + routeurls.SALES_VOUCHER_API_BASE_URL + "/getbyclientstudent", { params: new HttpParams().set('studentname', student).set('client', clientName)  }).pipe(
       retry(3),
       map(res => {
         console.log(res);
@@ -47,16 +61,16 @@ export class SalesVoucherService {
     );
   }
   getbygroup(gr:any): Observable<any> {
-    console.log(gr.toString());
+    //console.log(gr.toString());
     return this.http.get<any>(routeurls.BASE_API_URL + routeurls.SALES_VOUCHER_API_BASE_URL + "/getbygroup", { params: new HttpParams().set('group', gr.toString()) })
     .pipe(
       retry(3),
       map(res => {
-        console.log(res);
+        //console.log(res);
         if (!res) {
           throw new Error('Value expected!');
         }
-        console.log(res);
+        //console.log(res);
         return res;
       }),
       catchError(err => of([]))
@@ -76,16 +90,55 @@ export class SalesVoucherService {
       catchError(err => of([]))
     );
   }
+  getbydateclient(dat1,dat2, client): Observable<any> {
+    return this.http.get<any>(routeurls.BASE_API_URL + routeurls.SALES_VOUCHER_API_BASE_URL + "/getbydateclient", { params: new HttpParams().set('date1', dat1).set('date2',dat2).set('client',client) })
+    .pipe(
+      retry(3),
+      map(res => {
+        if (!res) {
+          throw new Error('Value expected!');
+        }
+        return res;
+      }),
+      catchError(err => of([]))
+    );
+  }
+  getbydateemployee(dat1,dat2, employee): Observable<any> {
+    return this.http.get<any>(routeurls.BASE_API_URL + routeurls.SALES_VOUCHER_API_BASE_URL + "/getbydateemployee", { params: new HttpParams().set('date1', dat1).set('date2',dat2).set('employee',employee) })
+    .pipe(
+      retry(3),
+      map(res => {
+        if (!res) {
+          throw new Error('Value expected!');
+        }
+        return res;
+      }),
+      catchError(err => of([]))
+    );
+  }
+  getbydateclientstudent(dat1,dat2, client,student): Observable<any> {
+    return this.http.get<any>(routeurls.BASE_API_URL + routeurls.SALES_VOUCHER_API_BASE_URL + "/getbydateclientstudent", { params: new HttpParams().set('date1', dat1).set('date2',dat2).set('client',client).set('student',student) })
+    .pipe(
+      retry(3),
+      map(res => {
+        if (!res) {
+          throw new Error('Value expected!');
+        }
+        return res;
+      }),
+      catchError(err => of([]))
+    );
+  }
   getbyid(id: any): Observable<any> {
     return this.http.get<any>(routeurls.BASE_API_URL + routeurls.SALES_VOUCHER_API_BASE_URL + "/getbyid", { params: new HttpParams().set('id', id) })
     .pipe(
       retry(3),
       map(res => {
-        console.log(res);
+        //console.log(res);
         if (!res) {
           throw new Error('Value expected!');
         }
-        console.log(res);
+        //console.log(res);
         return res;
       }),
       catchError(err => of([]))
@@ -93,16 +146,16 @@ export class SalesVoucherService {
   }
   update(id: any, obj: any): Observable<any> {
     obj.Id = id;
-    console.log(obj);
+    //console.log(obj);
     return this.http.put<any>(routeurls.BASE_API_URL + routeurls.SALES_VOUCHER_API_BASE_URL , obj)
     .pipe(
       retry(3),
       map(res => {
-        console.log(res);
+        //console.log(res);
         if (!res) {
           throw new Error('Value expected!');
         }
-        console.log(res);
+        //console.log(res);
         return res;
       }),
       catchError(err => of([]))

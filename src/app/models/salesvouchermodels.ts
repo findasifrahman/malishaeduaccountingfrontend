@@ -30,17 +30,20 @@ export class salesVouchermodels {
 
   modelForms: FormGroup = this.formBuilder.group({
     voucherid: ["", Validators.required],
-    issuedemployee: [""],
+    studentoragentName: [""],//group
+    studentname: [""],//against group
+    //issuedemployee: [""],
     loggeduser:[""],
     date: ["", Validators.required],
-    clientid: [""],
-    clientName: [""],
+    clientid: [""], //not needed
+    clientName: [""], //not needed
     incomeType: [''],
-    totalAmount: [0],
+    packageAmount: [0], //auto generate from client
     paidAmount: [0],
     prevdues: [0],
     currentdues: [0],
-    additionalInfo: [""]
+    additionalInfo: [""],
+    servedby:[""]
 
   });
   constructor(private formBuilder: FormBuilder) {}

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { UserviewlayoutComponent } from './userviewlayout.component';
+import { ClientGroupEditComponent } from './client-group-edit.component';
 
-describe('UserviewlayoutComponent', () => {
-  let component: UserviewlayoutComponent;
-  let fixture: ComponentFixture<UserviewlayoutComponent>;
+describe('ClientGroupEditComponent', () => {
+  let component: ClientGroupEditComponent;
+  let fixture: ComponentFixture<ClientGroupEditComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ UserviewlayoutComponent ]
+      declarations: [ ClientGroupEditComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(UserviewlayoutComponent);
+    fixture = TestBed.createComponent(ClientGroupEditComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

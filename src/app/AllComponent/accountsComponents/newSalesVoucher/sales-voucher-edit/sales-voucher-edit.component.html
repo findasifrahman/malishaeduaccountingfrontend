@@ -1,5 +1,5 @@
 
-<h3 style="text-align:center;color:cadetblue;font-family:Tahoma">Add New Voucher </h3>
+<h3 style="text-align:center;color:cadetblue;font-family:Tahoma">Edit Voucher </h3>
 
 <br />
 <form class="example-container" [formGroup]="Forms">
@@ -13,22 +13,20 @@
           <mat-label>Voucher No</mat-label>
           <input matInput placeholder="No" type="Text" formControlName="voucherid" required>
         </mat-form-field>
-        <mat-form-field floatLabel="options.value.floatLabel">
-          <mat-label>Issued Person</mat-label>
-          <input matInput placeholder="Issued By" type="Text" formControlName="issuedemployee" required>
-        </mat-form-field>
+        <app-select-search [formControlnam]="'clientgroupname'" [preVal]="selectsearchval1" (outputval)="SelectvalChanged1($event)"  [list]= "clientgrouplist"></app-select-search>
+        <app-select-search [formControlnam]="'studentname'" [preVal]="selectsearchval3" (outputval)="SelectvalChanged3($event)"  [list]= "studentlist"></app-select-search>
         <mat-form-field floatLabel="options.value.floatLabel">
           <mat-label>date</mat-label>
           <input matInput placeholder="Phone" type="date" formControlName="date" required>
         </mat-form-field>
 
-        <app-select-search [formControlnam]="'clientId'"  [preVal]="selectsearchval1"  (outputval)="SelectvalChanged1($event)"  [list]= "clientlist"></app-select-search>
+        <!--<app-select-search [formControlnam]="'clientId'" [preVal]="selectsearchval1" (outputval)="SelectvalChanged1($event)"  [list]= "clientlist"></app-select-search>
         <app-select-search [formControlnam]="'clientname'"  [preVal]="selectsearchval3"  (outputval)="SelectvalChanged3($event)"  [list]= "clientlist"></app-select-search>
-
+        -->
         <br/>
         <mat-form-field floatLabel="options.value.floatLabel">
           <mat-label>Additional Info</mat-label>
-          <input matInput placeholder="Issued By" type="Text" formControlName="additionalInfo" required>
+          <input matInput placeholder="Issued By" type="Text" formControlName="additionalInfo" >
         </mat-form-field>
         <button mat-raised-button style="width:100%" color="warn" (click)='matgroup.selectedIndex = 1'>Go Next</button>
       </mat-tab>
@@ -41,12 +39,12 @@
 
         <br/>
         <mat-form-field floatLabel="options.value.floatLabel">
-          <mat-label>Total Amount</mat-label>
-          <input matInput placeholder="Total Amount" type="Number" formControlName="totalAmount" >
+          <mat-label>Package Amount</mat-label>
+          <input matInput placeholder="Package Amount" type="Number" formControlName="packageAmount" required>
         </mat-form-field>
         <mat-form-field floatLabel="options.value.floatLabel">
           <mat-label>Paid Amount</mat-label>
-          <input matInput placeholder="Paid Amount" type="Number" formControlName="paidAmount" >
+          <input matInput placeholder="Paid Amount" type="Number" formControlName="paidAmount" required>
         </mat-form-field>
         <mat-form-field floatLabel="options.value.floatLabel">
           <mat-label>Prev Dues</mat-label>

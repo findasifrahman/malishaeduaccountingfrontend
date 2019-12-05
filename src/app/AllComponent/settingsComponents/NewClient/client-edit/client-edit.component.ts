@@ -6,7 +6,12 @@ import { __await } from 'tslib';
 import { MatSnackBar } from '@angular/material';
 
 import { clientmodels } from '../../../../models/clientmodels';
-
+import { ClientGroupService } from '../../NewClientGroup/client-group.service';
+import { MajorService } from '../../NewMajor/major.service';
+import { NationalityService } from '../../NewNationality/nationality.service';
+import { UniversityService } from '../../NewUniversity/university.service'
+import { DegreeService } from '../../NewDegree/degree.service'
+import { EmployeeService } from '../../NewEmployee/employee.service'
 @Component({
   selector: 'app-client-edit',
   templateUrl: './client-edit.component.html',
@@ -15,10 +20,19 @@ import { clientmodels } from '../../../../models/clientmodels';
 export class ClientEditComponent implements OnInit {
   id: any;
   selectFormControl = new FormControl('', Validators.required);
-  groups: any[];
+  cglist: any[];
+  allclient: any;
+  majorlist: any;
+  nationalitylist: any;
+  universitylist: any;
+  degreelist: any;
+  employeelist: any;
   Forms = this.climodels.modelForms;
-  constructor(private climodels: clientmodels,private snackBar:MatSnackBar,
-    private cliService: ClientService,private formBuilder: FormBuilder,private route:ActivatedRoute, private router: Router) { }
+  selectsearchval1: string;
+  constructor(private climodels: clientmodels,private snackBar:MatSnackBar,private cgService: ClientGroupService,
+    private cliService: ClientService,private formBuilder: FormBuilder,private route:ActivatedRoute, private router: Router,
+    private majorService: MajorService, private  nationalityService:NationalityService, private universityService:UniversityService,
+    private empService:EmployeeService,private degreeService:DegreeService) { }
     compareThem(o1, o2): boolean{
       console.log('compare with');
       return o1.name === o2.name;
@@ -29,12 +43,49 @@ export class ClientEditComponent implements OnInit {
       this.id = params['id'];
       console.log("update id--" + params['id']);
       this.cliService.getbyid(this.id).subscribe((data) => {
+        this.selectsearchval1 = data["clientgroupname"];
         this.Forms.patchValue(data);
       });
+    })
+    this.cgService.getAll().subscribe(data =>{
+      this.cglist = data as any
+    })
+    this.majorService.getAll().subscribe(data =>{
+      this.majorlist = data as any
+    })
+    this.nationalityService.getAll().subscribe(data =>{
+      this.nationalitylist = data as any
+    })
+    this.universityService.getAll().subscribe(data =>{
+      this.universitylist = data as any
+    })
+    this.degreeService.getAll().subscribe(data =>{
+      this.degreelist = data as any
+    })
+    this.empService.getAll().subscribe(data =>{
+      this.employeelist = data as any
+    })
+    this.cliService.getAll().subscribe(data =>{
+      this.allclient= data as any
     })
   }
 
   async FormSubmit() {
+    this.Forms.patchValue({
+      clientgroupname: this.selectsearchval1
+    })
+    /*const clientgroup = this.Forms.get('clientgroupname').value
+    const student = this.Forms.get('studentname').value
+    if(this.allclient.find(x=> (x.clientgroupname == clientgroup && x.studentname == student))){
+      this.snackBar.open('Agent and student name allready exist', "Remove", {
+        duration: 4000,
+        verticalPosition: 'top',
+        panelClass: ['red-snackbar']
+      });
+      return
+    }*/
+
+
     const formValue = this.Forms.value;
     console.log(formValue);
     await this.cliService.update(this.id, formValue).subscribe(() => {
@@ -51,6 +102,11 @@ export class ClientEditComponent implements OnInit {
         });
       }
     );
+  }
+  SelectvalChanged1(val){
+    /*const va =this.cglist.find(x => x.clientId === val).clientname
+    this.Forms.patchValue({clientName: va});*/
+    this.selectsearchval1 = val;
   }
 
 }

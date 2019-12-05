@@ -31,13 +31,15 @@ export class salesrecieptmodels {
 
   modelForms: FormGroup = this.formBuilder.group({
     recieptid: ["", Validators.required],
-    issuedemployee: [""],
+    studentoragentName: [""],//group
+    studentname: [""],//against group
     loggeduser:[""],
+    servedby: [""],
     date: ["", Validators.required],
-    clientName: ["",Validators.required],
-    incomeType: ['', Validators.required],
-    paidAmount: [0]
-
+    paidAmount: [0],
+    prevdues: [0],
+    currentdues: [0],
+    additionalInfo: [""]
   });
   constructor(private formBuilder: FormBuilder) {}
 }

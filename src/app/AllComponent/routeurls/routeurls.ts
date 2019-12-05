@@ -1,5 +1,6 @@
 export const routeurls = Object.freeze({
-  BASE_API_URL: 'http://localhost:8086',
+  BASE_API_URL: 'http://localhost:5021',//'http://103.218.25.96:5021',//'http://localhost:8086'
+  PICTURE_VIEW_URL: "/picture/getpic?picid=",
   FILE_UPLOAD_BASE_URL:"/picture/upload",
   FILE_DELETE_BASE_URL:"/picture/delete",
   File_UPLOAD_STATIC_VIEW_URL: "/api/uploads/",
@@ -13,9 +14,17 @@ export const routeurls = Object.freeze({
   INVENTORY_ITEM_API_BASE_URL: "/api/inventoryitem",
   INVENTORY_API_BASE_URL: "/api/inventory",
   PAYROLL_API_BASE_USRL: "/api/payroll",
+  CLIENT_GROUP_API_BASE_URL: "/api/clientgroup",
   CLIENT_API_BASE_URL: "/api/client",
   SALES_VOUCHER_API_BASE_URL: "/api/salesvoucher",
   PURCHASE_API_BASE_URL: "/api/purchase",
-  OFFICE_COST_API_BASE_URL: "/api/officecost"
+  OFFICE_COST_API_BASE_URL: "/api/officecost",
+  PURPOSE_API_BASE_URL: "/api/purpose",
+  SALES_COMMISSION_API_BASE_URL: "/api/commission",
+  SALES_RECIEPT_API_BASE_URL: "/api/salesreciept",
+  UNIVERSITY_API_BASE_URL: "/api/university",
+  MAJOR_API_BASE_URL: "/api/major",
+  NATIONALITY_API_BASE_URL: "/api/nationality",
+  DEGREE_API_BASE_URL: "/api/degree",
   //... more of your variables
 });

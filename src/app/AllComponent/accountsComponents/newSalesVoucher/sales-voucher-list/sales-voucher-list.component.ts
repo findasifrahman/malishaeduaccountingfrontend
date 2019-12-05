@@ -1,6 +1,6 @@
 import { Component, OnInit,ViewChild,Inject } from '@angular/core';
 import { SalesVoucherService } from '../sales-voucher.service';
-import { MatTable, MatPaginator, MatTableDataSource, MatDialog } from '@angular/material';
+import { MatTable, MatPaginator,MatSort, MatTableDataSource, MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { ConfirmationDialogComponent } from '../../../../sharedComponentModule/confirmation-dialog/confirmation-dialog.component';
 import { MatSnackBar } from '@angular/material';
@@ -13,8 +13,9 @@ import { salesVouchermodels } from '../../../../models/salesvouchermodels';
 })
 export class SalesVoucherListComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  displayedColumns: string[] = ['voucherid','issuedemployee','date','clientName','incomeType','totalAmount','paidAmount','currentdues','buttons'];
-  displayedColumnsName: string[] = ['Voucher Id','Issuede By','Date','Client','Type','Total','Paid','Dues'];
+  @ViewChild(MatSort) sort: MatSort;
+  displayedColumns: string[] = ['voucherid','studentoragentName','date','studentname','incomeType','servedby','packageAmount','paidAmount','currentdues','buttons'];
+  displayedColumnsName: string[] = ['Voucher Id','Student/Agent','Date','Student Name','Type','servedby','Package','Paid','Dues'];
   AllElement: MatTableDataSource<salesVouchermodels>;
   constructor(private snackBar: MatSnackBar, private svService: SalesVoucherService, public dialog: MatDialog,
     public _router: Router) { }
@@ -29,6 +30,7 @@ export class SalesVoucherListComponent implements OnInit {
       this.svService.getAll().subscribe((posts) => {
         this.AllElement = new MatTableDataSource(posts as any);
         this.AllElement.paginator = this.paginator;
+        this.AllElement.sort = this.sort;
         //setTimeout(() => this.AllElement.paginator = this.paginator);
         console.log(posts);
       });

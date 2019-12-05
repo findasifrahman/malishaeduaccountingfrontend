@@ -13,8 +13,8 @@ import { purchasemodels } from '../../../../models/purchasemodels';
 })
 export class PurchaseListComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  displayedColumns: string[] = ['serialid','purchasedby','date','clientName','incomeType','quantity','totalPrice','buttons'];
-  displayedColumnsName: string[] = ['Id','Purchased By','Date','Client','Type','Quantity','totalPrice'];
+  displayedColumns: string[] = ['serialid','purchasedby','date','incomeType','quantity','totalPrice','buttons'];
+  displayedColumnsName: string[] = ['Id','Purchased By','Date','Type','Quantity','totalPrice'];
   AllElement: MatTableDataSource<purchasemodels>;
   constructor(private snackBar: MatSnackBar, private pService: PurchaseService, public dialog: MatDialog,
     public _router: Router) { }

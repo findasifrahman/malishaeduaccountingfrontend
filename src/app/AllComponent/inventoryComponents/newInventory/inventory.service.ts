@@ -76,6 +76,19 @@ export class InventoryService {
       catchError(err => of([]))
     );
   }
+  getbyitemname(name): Observable<any>{
+    return this.http.get<any>(routeurls.BASE_API_URL + routeurls.INVENTORY_API_BASE_URL + "/getbyname", { params: new HttpParams().set('name', name) })
+    .pipe(
+      retry(3),
+      map(res => {
+        if (!res) {
+          throw new Error('Value expected!');
+        }
+        return res;
+      }),
+      catchError(err => of([]))
+    );
+  }
   update(id: any, obj: any): Observable<any> {
     obj.Id = id;
     console.log(obj);

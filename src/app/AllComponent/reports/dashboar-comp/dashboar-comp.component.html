@@ -3,13 +3,13 @@
     <div class="card text-white bg-primary">
       <div class="card-header">
           <div class="row">
-              <div class="col col-xs-3">
+              <div class="col col-xs-2">
                   <i class="fa fa-comments fa-5x"></i>
               </div>
-              <div class="col col-xs-9 text-right">
+              <div class="col col-xs-10 text-right">
                   <div class="d-block huge">Total amount Sold: {{totalsales}}</div>
                   <div class="d-block" style="color: yellow;">Total amount Paid : {{totalpaidam}}</div>
-                  <div class="d-block" style="color: yellow;">Due Between : {{totalpaidam}}</div>
+                  <div class="d-block" style="color: yellow;">Due Between : {{totaldues}}</div>
               </div>
           </div>
       </div>
@@ -60,11 +60,13 @@
                 </div>
             </div>
         </div>
-        <div class="card-footer" (click)=' hrDetailSubmit()' >
-            <span class="float-left">{{ViewData}}</span>
-            <a href="javascript:void(0)" class="float-right card-inverse">
-                <span ><i class="fa fa-arrow-circle-right"></i></span>
-            </a>
+        <div class="card-footer" (click)='hrDetailSubmit()' >
+            <div class="col col-xs-6" >
+                  <span class="float-left">{{ViewData}}</span>
+                  <a href="javascript:void(0)" class="float-right card-inverse">
+                      <span ><i class="fa fa-arrow-circle-right"></i></span>
+                  </a>
+            </div>
         </div>
       </div>
     </div>
@@ -81,11 +83,21 @@
                 </div>
             </div>
         </div>
-        <div class="card-footer"  (click)='officialSpendDetailSubmit()'>
-            <span class="float-left">{{ViewData}}</span>
-            <a href="javascript:void(0)" class="float-right card-inverse">
-                <span ><i class="fa fa-arrow-circle-right"></i></span>
-            </a>
+        <div class="card-footer">
+            <div class="row">
+                <div class="col col-xs-6" (click)='officialSpendDetailSubmit()'>
+                    <span class="float-left">{{ViewData}}</span>
+                    <a href="javascript:void(0)" class="float-right card-inverse">
+                        <span ><i class="fa fa-arrow-circle-right"></i></span>
+                    </a>
+                </div>
+                <div class="col col-xs-6" (click)='inventoryListView()'>
+                    <span class="float-left" style="color:orange;">{{ViewDataInventory}}</span>
+                    <a href="javascript:void(0)" class="float-right card-inverse">
+                        <span ><i class="fa fa-arrow-circle-down"></i></span>
+                    </a>
+                </div>
+            </div>
         </div>
       </div>
     </div>
@@ -117,46 +129,7 @@
 
 <br />
 <br />
-<div class='row' [hidden]="salestabhid" #salesTable>
-  <table class="table table-dark table-sm table-bordered table-striped"  style="font-size: smaller;">
-    <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">VID</th>
-      <th scope="col">Issued By</th>
-      <th scope="col">Written by</th>
-      <th scope="col">date</th>
-      <th scope="col">Client Id</th>
-      <th scope="col">Client</th>
-      <th scope="col">Income Source</th>
-      <th scope="col">Total am</th>
-      <th scope="col">Paid by</th>
-      <th scope="col">Prev Due</th>
-      <th scope="col">Current Due</th>
-      <th scope="col">Info</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let c of saleslist; index as i">
-      <th scope="row">{{ i + 1 }}</th>
-      <td>
-        <ngb-highlight [result]="c.voucherid" ></ngb-highlight>
-      </td>
-      <td><ngb-highlight [result]="c.issuedemployee" ></ngb-highlight></td>
-      <td><ngb-highlight [result]="c.loggeduser" ></ngb-highlight></td>
-      <td><ngb-highlight [result]="c.date | date" ></ngb-highlight></td>
-      <td><ngb-highlight [result]="c.clientid" ></ngb-highlight></td>
-      <td><ngb-highlight [result]="c.clientName" ></ngb-highlight></td>
-      <td><ngb-highlight [result]="c.incomeType" ></ngb-highlight></td>
-      <td><ngb-highlight [result]="c.totalAmount | number" ></ngb-highlight></td>
-      <td><ngb-highlight [result]="c.paidAmount | number" ></ngb-highlight></td>
-      <td><ngb-highlight [result]="c.prevdues | number" ></ngb-highlight></td>
-      <td><ngb-highlight [result]="c.currentdues | number" ></ngb-highlight></td>
-      <td><ngb-highlight [result]="c.additionalInfo" ></ngb-highlight></td>
-    </tr>
-    </tbody>
-  </table>
-</div>
+<app-sales-table [salestabhid]='salestabhid' [saleslist]='saleslist' ></app-sales-table>
 
 <div class='row' [hidden]="purtabhid" #purchasetable>
   <table class="table table-dark table-sm table-bordered table-striped" style="font-size: smaller;">
@@ -167,8 +140,6 @@
       <th scope="col">Issued By</th>
       <th scope="col">Written by</th>
       <th scope="col">date</th>
-      <th scope="col">Client Id</th>
-      <th scope="col">Client</th>
       <th scope="col">Income Source</th>
       <th scope="col">Price</th>
       <th scope="col">Qty</th>
@@ -187,8 +158,6 @@
       <td><ngb-highlight [result]="c.purchasedby" ></ngb-highlight></td>
       <td><ngb-highlight [result]="c.loggeduser" ></ngb-highlight></td>
       <td><ngb-highlight [result]="c.date | date" ></ngb-highlight></td>
-      <td><ngb-highlight [result]="c.clientid" ></ngb-highlight></td>
-      <td><ngb-highlight [result]="c.clientName" ></ngb-highlight></td>
       <td><ngb-highlight [result]="c.incomeType" ></ngb-highlight></td>
       <td><ngb-highlight [result]="c.price | number" ></ngb-highlight></td>
       <td><ngb-highlight [result]="c.quantity | number" ></ngb-highlight></td>
@@ -303,3 +272,62 @@
       </tbody>
     </table>
   </div>
+
+  <div [hidden]="inventorylisttableshow" #inventorylisttable>
+      <ngb-alert [dismissible]="false" style="text-align:center;" type="dark" > Inventor List </ngb-alert>
+      <div *ngFor="let c of inve; index as i">
+        <div *ngIf="i % 3 ==0" >
+          <div class="row">
+              <div class="col-md-4" *ngIf="inve[i + 0]">
+                <div class="card text-white bg-success">
+                  <div class="card-header">
+                      <div class="row">
+                          <div class="col col-xs-3">
+                              <i class="fa fa-band-aid fa-3x"></i>
+                          </div>
+                          <div class="col col-xs-9 text-right">
+                              <div class="d-block huge">{{inve[i + 0].itemname}}</div>
+                              <div class="d-block">{{inve[i + 0].quantity}}</div>
+                          </div>
+                      </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4" *ngIf="inve[i + 1]">
+                <div class="card text-white bg-secondary">
+                  <div class="card-header">
+                      <div class="row">
+                          <div class="col col-xs-3">
+                              <i class="fa fa-shopping-cart fa-2x"></i>
+                          </div>
+                          <div class="col col-xs-9 text-right">
+                              <div class="d-block huge">{{inve[i + 1].itemname}}</div>
+                              <div class="d-block">{{inve[i + 1].quantity}}</div>
+                          </div>
+                      </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4" *ngIf="inve[i + 2]">
+                <div class="card text-white bg-dark">
+                  <div class="card-header">
+                      <div class="row">
+                          <div class="col col-xs-3">
+                              <i class="fa fa-atlasfa-2x"></i>
+                          </div>
+                          <div class="col col-xs-3 text-right">
+                              <div class="d-block huge">{{inve[i + 2].itemname}}</div>
+                              <div class="d-block">{{inve[i + 2].quantity}}</div>
+                          </div>
+                      </div>
+                  </div>
+                </div>
+              </div>
+
+          </div>
+          <br/>
+        </div>
+      </div>
+  </div>
+
+

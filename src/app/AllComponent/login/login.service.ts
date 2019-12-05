@@ -19,9 +19,9 @@ export class LoginService {
     const token = localStorage.getItem('jwt');
     if(token !=null){
       console.log('get user logged in -----------');
-      console.log(this.jwtHelper.getTokenExpirationDate(token));
-      console.log(this.jwtHelper.decodeToken(token).role);
-      console.log(this.jwtHelper.decodeToken(token));
+      //console.log(this.jwtHelper.getTokenExpirationDate(token));
+      //console.log(this.jwtHelper.decodeToken(token).role);
+      //console.log(this.jwtHelper.decodeToken(token));
 
       return !this.jwtHelper.isTokenExpired(token);
     }

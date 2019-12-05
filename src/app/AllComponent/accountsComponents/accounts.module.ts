@@ -3,6 +3,8 @@ import { Routes, RouterModule } from '@angular/router'
 import { CommonModule } from '@angular/common';
 import {  ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { salesVouchermodels } from '../../models/salesvouchermodels';
+import { salesrecieptmodels } from '../../models/salesrecieptmodels';
+import { salescommissionmodels } from '../../models/salescommissionmodels';
 import { purchasemodels } from '../../models/purchasemodels'
 const routes: Routes = [
   {
@@ -12,7 +14,7 @@ const routes: Routes = [
 @NgModule({
   declarations:[],
   imports: [CommonModule,FormsModule,//RouterModule.forChild(routes),
-   ReactiveFormsModule, salesVouchermodels, purchasemodels],
+   ReactiveFormsModule, salesVouchermodels, purchasemodels, salescommissionmodels,salesrecieptmodels],
   exports: []
  })
 

@@ -26,10 +26,10 @@ export class LoginComponent implements OnInit {
     async FormSubmit() {
       const formValue = this.Forms.value;
       await this.logservice.submit(formValue).subscribe(response => {
-        console.log(<any>response)
+        //console.log(<any>response)
         let token = (<any>response).token;
         localStorage.setItem("jwt", token);
-        console.log(token);
+        //console.log(token);
         console.log(this.logservice.getrole());
         this.snackBar.open('Congradulations. Logged In Succesdfully', "Remove", {
           duration: 6000,

@@ -1,0 +1,57 @@
+
+<h3 style="text-align:center;color:cadetblue;font-family:Tahoma">Add New Sales Commission </h3>
+
+<br />
+<form class="example-container" [formGroup]="Forms">
+  <div class="col-md-12" >
+    <mat-tab-group mat-stretch-tabs class="example-stretched-tabs " #matgroup>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          Agent Detail
+        </ng-template>
+        <app-select-search [formControlnam]="'clientgroupname'" [preVal]="selectsearchval1" (outputval)="SelectvalChanged1($event)"  [list]= "clientgrlist"></app-select-search>
+        <mat-form-field floatLabel="options.value.floatLabel">
+          <mat-label>From </mat-label>
+          <input matInput placeholder="From" type="date" formControlName="fromdate" [readonly]="fromdatereadonly" required>
+        </mat-form-field>
+        <mat-form-field floatLabel="options.value.floatLabel">
+            <mat-label>To </mat-label>
+            <input matInput placeholder="To" type="date" formControlName="todate" required>
+        </mat-form-field>
+        <mat-form-field floatLabel="options.value.floatLabel">
+          <mat-label>Additional Info</mat-label>
+          <input matInput placeholder="Issued By" type="Text" formControlName="additionalInfo">
+        </mat-form-field>
+        <button mat-raised-button style="width:100%" color="warn" (click)='matgroup.selectedIndex = 1'>Go Next</button>
+      </mat-tab>
+
+      <mat-tab>
+        <ng-template mat-tab-label>
+          Commission
+        </ng-template>
+        <br/>
+        <mat-form-field floatLabel="options.value.floatLabel">
+          <mat-label>Total amount</mat-label>
+          <input matInput placeholder="Total amount Given" type="Number" formControlName="totalamount" >
+        </mat-form-field>
+        <mat-form-field floatLabel="options.value.floatLabel">
+          <mat-label>Due amount</mat-label>
+          <input matInput placeholder="Due amount in this time" type="Number" formControlName="dueamount" >
+        </mat-form-field>
+        <mat-form-field floatLabel="options.value.floatLabel">
+          <mat-label>Commission amount</mat-label>
+          <input matInput placeholder="Commission Amount" type="Number" formControlName="commission" >
+        </mat-form-field>
+
+        <div class="input-group btn-group">
+          <button type="submit" (click)="FormSubmit()" class="form-control btn" style="height:40px;width:425px;background-color:black;color:whitesmoke" [disabled]="!Forms.valid">Submit</button>
+        </div>
+      </mat-tab>
+
+    </mat-tab-group>
+  </div>
+
+</form>
+
+<br /><br />
+<app-sales-table [salestabhid]='salestabhid' [saleslist]='saleslist' ></app-sales-table>

@@ -5,7 +5,7 @@
         <header style="padding-bottom: 30px;">
             <a href="#" style="font-size: 18px;">{{Administrator}}</a>
             <span>
-              <button mat-fab color="accent" style="width: 120px;height: 100px;font-size: 50px; background:grey">
+              <button mat-fab color="accent" style="width: 80px;height: 70px;font-size: 30px; background:grey">
                 <mat-icon aria-hidden="false" inline=true appearance="outline" style="color: honeydew;">{{loggedUserName}}</mat-icon>
               </button>
             </span>
@@ -24,6 +24,18 @@
                   </li>
                   <li class="nav-item">
                     <a style="text-align:left;display: inline-flex;" class="nav-link" [routerLink]='["/salesVoucher/list"]'><i><mat-icon aria-hidden="false">broken_image</mat-icon></i>Sales List</a>
+                  </li>
+                  <li class="nav-item" >
+                    <a style="text-align:left;display: inline-flex;" class="nav-link" [routerLink]='["/salesreciept/add"]'><i><mat-icon aria-hidden="false">shopping_basket</mat-icon></i>Add SalesReciept</a>
+                  </li>
+                  <li class="nav-item">
+                    <a style="text-align:left;display: inline-flex;" class="nav-link" [routerLink]='["/salesreciept/list"]'><i><mat-icon aria-hidden="false">theaters</mat-icon></i>SalesRecipt List</a>
+                  </li>
+                  <li class="nav-item" >
+                      <a style="text-align:left;display: inline-flex;" class="nav-link" [routerLink]='["/salescommission/add"]'><i><mat-icon aria-hidden="false">speed</mat-icon></i>Add SalesComm</a>
+                  </li>
+                  <li class="nav-item">
+                      <a style="text-align:left;display: inline-flex;" class="nav-link" [routerLink]='["/salescommission/list"]'><i><mat-icon aria-hidden="false">web_asset</mat-icon></i>SalesComm List</a>
                   </li>
                   <li class="nav-item" >
                       <a style="text-align:left;display: inline-flex;" class="nav-link" [routerLink]='["/purchase/add"]'><i><mat-icon aria-hidden="false">blur_on</mat-icon></i>Add New Purchase</a>
@@ -75,6 +87,57 @@
                   </li>
                 </div>
           </li>
+
+          <li class="nav">
+            <a class="nav-link nav-dropdown-toggle" style="display: inline-flex;"  (click) = toggleDisplayClient()>
+                <i><mat-icon aria-hidden="false">unfold_more</mat-icon></i> Client Set
+              </a>
+              <div style="padding-top: 0 !important;" class="nav-link nav-dropdown-toggle" [hidden] = "isShowClient">
+                <li class="nav-item">
+                  <a style="text-align:left;display: inline-flex;" class="nav-link" [routerLink]='["/clientgroup/add"]'><i><mat-icon aria-hidden="false">subject</mat-icon></i>Add ClientGroup</a>
+                </li>
+                <li class="nav-item">
+                  <a style="text-align:left;display: inline-flex;" class="nav-link" [routerLink]='["/clientgroup/list"]'><i><mat-icon aria-hidden="false">stars</mat-icon></i>Clientgroup List</a>
+                </li>
+
+
+                <li class="nav-item">
+                  <a style="text-align:left;display: inline-flex;" class="nav-link" [routerLink]='["/degree/add"]'><i><mat-icon aria-hidden="false">all_out</mat-icon></i>Add Degree</a>
+                </li>
+                <li class="nav-item">
+                  <a style="text-align:left;display: inline-flex;" class="nav-link" [routerLink]='["/degree/list"]'><i><mat-icon aria-hidden="false">class</mat-icon></i>Degree List</a>
+                </li>
+
+                <li class="nav-item">
+                  <a style="text-align:left;display: inline-flex;" class="nav-link" [routerLink]='["/major/add"]'><i><mat-icon aria-hidden="false">bug_report</mat-icon></i>Add Major</a>
+                </li>
+                <li class="nav-item">
+                  <a style="text-align:left;display: inline-flex;" class="nav-link" [routerLink]='["/major/list"]'><i><mat-icon aria-hidden="false">eject</mat-icon></i>Major List</a>
+                </li>
+
+                <li class="nav-item">
+                  <a style="text-align:left;display: inline-flex;" class="nav-link" [routerLink]='["/nationality/add"]'><i><mat-icon aria-hidden="false">gavel</mat-icon></i>Add Nationality</a>
+                </li>
+                <li class="nav-item">
+                  <a style="text-align:left;display: inline-flex;" class="nav-link" [routerLink]='["/nationality/list"]'><i><mat-icon aria-hidden="false">polymer</mat-icon></i>Nationality List</a>
+                </li>
+
+                <li class="nav-item">
+                  <a style="text-align:left;display: inline-flex;" class="nav-link" [routerLink]='["/university/add"]'><i><mat-icon aria-hidden="false">store</mat-icon></i>Add university</a>
+                </li>
+                <li class="nav-item">
+                  <a style="text-align:left;display: inline-flex;" class="nav-link" [routerLink]='["/university/list"]'><i><mat-icon aria-hidden="false">toc</mat-icon></i>University List</a>
+                </li>
+
+                <li class="nav-item">
+                    <a style="text-align:left;display: inline-flex;" class="nav-link" [routerLink]='["/client/add"]'><i><mat-icon aria-hidden="false">local_offer</mat-icon></i>Add New Client</a>
+                </li>
+                <li class="nav-item">
+                  <a style="text-align:left;display: inline-flex;" class="nav-link" [routerLink]='["/client/list"]'><i><mat-icon aria-hidden="false">local_florist</mat-icon></i>Client List</a>
+                </li>
+              </div>
+          </li>
+
           <li class="nav">
             <a class="nav-link nav-dropdown-toggle" style="display: inline-flex;"  (click) = toggleDisplaySettings()>
               <i><mat-icon aria-hidden="false">indeterminate_check_box</mat-icon></i> Settings
@@ -93,28 +156,31 @@
                 <a style="text-align:left;display: inline-flex;" class="nav-link" [routerLink]='["/employee/list"]'><i><mat-icon aria-hidden="false">zoom_out_map</mat-icon></i>Employee List</a>
               </li>
               <li class="nav-item">
-                <a style="text-align:left;display: inline-flex;" class="nav-link" [routerLink]='["/officialexpenditure/add"]'><i><mat-icon aria-hidden="false">store_mall_directory</mat-icon></i>Add Office Cost </a>
+                <a style="text-align:left;display: inline-flex;" class="nav-link" [routerLink]='["/officialexpenditure/add"]'><i><mat-icon aria-hidden="false">store_mall_directory</mat-icon></i>Add OfficeCost Type </a>
               </li>
               <li class="nav-item">
-                <a style="text-align:left;display: inline-flex;" class="nav-link" [routerLink]='["/officialexpenditure/list"]'><i><mat-icon aria-hidden="false">traffic</mat-icon></i>Office Cost List</a>
+                <a style="text-align:left;display: inline-flex;" class="nav-link" [routerLink]='["/officialexpenditure/list"]'><i><mat-icon aria-hidden="false">traffic</mat-icon></i>OfficeCost Type List</a>
               </li>
               <li class="nav-item">
-                <a style="text-align:left;display: inline-flex;" class="nav-link" [routerLink]='["/incomesource/add"]'><i><mat-icon aria-hidden="false">train</mat-icon></i>Add IncomeSource</a>
+                <a style="text-align:left;display: inline-flex;" class="nav-link" [routerLink]='["/incomesource/add"]'><i><mat-icon aria-hidden="false">train</mat-icon></i>Add IncomeSource Type</a>
               </li>
               <li class="nav-item">
-                <a style="text-align:left;display: inline-flex;" class="nav-link" [routerLink]='["/incomesource/list"]'><i><mat-icon aria-hidden="false">near_me</mat-icon></i>IncomeSource List</a>
+                <a style="text-align:left;display: inline-flex;" class="nav-link" [routerLink]='["/incomesource/list"]'><i><mat-icon aria-hidden="false">near_me</mat-icon></i>IncomeSource Type List</a>
+              </li>
+
+
+              <li class="nav-item">
+                  <a style="text-align:left;display: inline-flex;" class="nav-link" [routerLink]='["/inventoryitem/add"]'><i><mat-icon aria-hidden="false">local_cafe</mat-icon></i>Add InventoryItem</a>
               </li>
               <li class="nav-item">
-                  <a style="text-align:left;display: inline-flex;" class="nav-link" [routerLink]='["/client/add"]'><i><mat-icon aria-hidden="false">local_offer</mat-icon></i>Add New Client</a>
+                <a style="text-align:left;display: inline-flex;" class="nav-link" [routerLink]='["/inventoryitem/list"]'><i><mat-icon aria-hidden="false">layers</mat-icon></i>InventoryItem List</a>
+              </li>
+
+              <li class="nav-item">
+                  <a style="text-align:left;display: inline-flex;" class="nav-link" [routerLink]='["/purpose/add"]'><i><mat-icon aria-hidden="false">open_with</mat-icon></i>Add Purpose</a>
               </li>
               <li class="nav-item">
-                <a style="text-align:left;display: inline-flex;" class="nav-link" [routerLink]='["/client/list"]'><i><mat-icon aria-hidden="false">local_florist</mat-icon></i>Client List</a>
-              </li>
-              <li class="nav-item">
-                  <a style="text-align:left;display: inline-flex;" class="nav-link" [routerLink]='["/inventoryitem/add"]'><i><mat-icon aria-hidden="false">local_cafe</mat-icon></i>Add Inventory</a>
-              </li>
-              <li class="nav-item">
-                <a style="text-align:left;display: inline-flex;" class="nav-link" [routerLink]='["/inventoryitem/list"]'><i><mat-icon aria-hidden="false">layers</mat-icon></i>Inventory List</a>
+                <a style="text-align:left;display: inline-flex;" class="nav-link" [routerLink]='["/purpose/list"]'><i><mat-icon aria-hidden="false">pets</mat-icon></i>Purpose List</a>
               </li>
             </div>
           </li>

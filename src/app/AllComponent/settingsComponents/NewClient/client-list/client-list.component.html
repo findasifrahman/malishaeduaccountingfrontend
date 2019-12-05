@@ -5,45 +5,80 @@
   </mat-form-field>
 </div>
 
-<div class="row">
-  <div class="col-md-12">
-    <mat-table [dataSource]="AllElement" multiTemplateDataRows class="mat-elevation-z8">
+<div class="example-container mat-elevation-z8">
+    <table mat-table #table [dataSource]="AllElement" multiTemplateDataRows matSort>
+
       <!-- Position Column -->
-      <ng-container matColumnDef="clientname">
-        <mat-header-cell *matHeaderCellDef> Client Name</mat-header-cell>
-        <mat-cell style="color:whitesmoke" *matCellDef="let Element"> {{Element.clientname}} </mat-cell>
+      <ng-container matColumnDef="clientgroupname" >
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Agent/Student</th>
+        <td mat-cell style="color:whitesmoke" *matCellDef="let Element"> {{Element.clientgroupname}} </td>
       </ng-container>
-      <ng-container matColumnDef="clientId">
-        <mat-header-cell *matHeaderCellDef> Client Id</mat-header-cell>
-        <mat-cell style="color:whitesmoke" *matCellDef="let Element"> {{Element.clientId}} </mat-cell>
+      <ng-container matColumnDef="studentname">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Student Name</th>
+        <td style="color:whitesmoke" *matCellDef="let Element"> {{Element.studentname}} </td>
       </ng-container>
-      <ng-container matColumnDef="phone">
-        <mat-header-cell *matHeaderCellDef> Phone </mat-header-cell>
-        <mat-cell style="color:whitesmoke" *matCellDef="let Element"> {{Element.phone}} </mat-cell>
+      <ng-container matColumnDef="nationality">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Stu Nationality </th>
+        <td mat-cell style="color:whitesmoke" *matCellDef="let Element"> {{Element.nationality}} </td>
       </ng-container>
-      <ng-container matColumnDef="address">
-        <mat-header-cell *matHeaderCellDef> Address </mat-header-cell>
-        <mat-cell style="color:whitesmoke" *matCellDef="let Element"> {{Element.address}} </mat-cell>
+      <ng-container matColumnDef="passport">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Stu Passport </th>
+        <td mat-cell style="color:whitesmoke" *matCellDef="let Element"> {{Element.passport}} </td>
       </ng-container>
+      <ng-container matColumnDef="degree">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Degree </th>
+        <td mat-cell style="color:whitesmoke" *matCellDef="let Element"> {{Element.degree}} </td>
+      </ng-container>
+      <ng-container matColumnDef="major">
+        <th mat-header-cell *matHeaderCellDef> Major </th>
+        <td mat-cell style="color:whitesmoke" *matCellDef="let Element"> {{Element.major}} </td>
+      </ng-container>
+
+
       <ng-container matColumnDef="buttons">
-        <mat-header-cell *matHeaderCellDef></mat-header-cell>
-        <mat-cell *matCellDef="let AllElement" (click)="$event.stopPropagation()">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let AllElement" (click)="$event.stopPropagation()">
           <button mat-button color="warn" (click)="onDelete(AllElement.id)">
             <mat-icon>delete</mat-icon>
           </button>
           <button mat-button color="warn" (click)="onUpdate(AllElement.id)">
             <mat-icon>update</mat-icon>
           </button>
-        </mat-cell>
+        </td>
       </ng-container>
 
-      <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
-      <mat-row style="background-color:black" *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+      <ng-container matColumnDef="expandedDetail">
+        <th mat-cell *matCellDef="let AllElement" [attr.colspan]="displayedColumns.length">
+          <div class="example-element-detail"
+              [@detailExpand]="AllElement == expandedElement ? 'expanded' : 'collapsed'">
+            <div class="example-element-diagram">
+              <div class="example-element-position"> {{AllElement.clientgroupname}} </div>
+              <div class="example-element-symbol"> {{AllElement.studentname}} </div>
 
-    </mat-table>
-    <mat-paginator [pageSize]="10" [pageSizeOptions]="[2, 4, 6, 10, 20]"></mat-paginator>
-  </div>
+            </div>
+            <div class="example-element-description">
+              Served By: {{AllElement.servedby}}. Source: {{AllElement.source}}. Phone: {{AllElement.phone}}.
+              <span class="example-element-description-attribution">Package -- {{AllElement.packageamount}} </span>
+            </div>
+          </div>
+        </th>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+      <tr mat-row style="background-color:black" *matRowDef="let row; columns: displayedColumns;"
+
+        class="example-element-row"
+        [class.example-expanded-row]="expandedElement === row"
+        (click)="expandedElement = expandedElement === row ? null : row"
+      ></tr>
+
+      <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+    </table>
+    <mat-paginator [pageSize]="20" [pageSizeOptions]="[2, 4, 6, 10, 20, 30]"></mat-paginator>
+
 </div>
+
 
 <br />
 <br />

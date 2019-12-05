@@ -1,24 +1,85 @@
 
-<ngb-alert [dismissible]="false" style="text-align:center;" type="success" > {{companyName}} </ngb-alert>
+<ngb-alert [dismissible]="false" style="text-align:center;" type="success" ><img width=20 height=20 [src]= "imageSrc"/> {{companyName}} </ngb-alert>
+<div [hidden]="reportvisible">
+  <div  style="display: flex;justify-content: center;" >
+      <div class='col-xl-3 col-lg-6'>
+        <mat-form-field class="example-full-width">
+          <input matInput [matDatepickerFilter]="myFilter" [(ngModel)]="fromDate" name="myDate" [matDatepicker]="picker" placeholder="From">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
 
-<div  style="display: flex;justify-content: center;">
-  <div class='col-xl-5 col-lg-6'>
-    <mat-form-field class="example-full-width">
-      <input matInput [matDatepickerFilter]="myFilter" [(ngModel)]="fromDate" name="myDate" [matDatepicker]="picker" placeholder="From">
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
-    </mat-form-field>
+      <div class='col-xl-3 col-lg-6'>
+        <mat-form-field class="example-full-width">
+          <input matInput [matDatepickerFilter]="myFilter" [(ngModel)]="toDate" name="myDate2" [matDatepicker]="picker2" placeholder="To">
+          <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+          <mat-datepicker #picker2></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div class='col-xl-2 col-lg-6'>
+        <app-select-search [formControlnam]="'clientgroupname'" [preVal]="selectsearchval1" (outputval)="SelectvalChanged1($event)"  [list]= "clientgrouplist"></app-select-search>
+      </div>
+      <div class='col-xl-2 col-lg-6'>
+        <app-select-search [formControlnam]="'studentname'" [preVal]="selectsearchval3" (outputval)="SelectvalChanged3($event)"  [list]= "studentgrouplist"></app-select-search>
+      </div>
+      <div class='col-xl-2 col-lg-6'>
+        <button mat-stroked-button   color="warn" (click)='onSubmit()' style="padding-top: 3px;padding-bottom: 3px;width: 100%;" >View Report</button>
+      </div>
   </div>
-  <div class='col-xl-3 col-lg-6'>
-    <mat-form-field class="example-full-width">
-      <input matInput [matDatepickerFilter]="myFilter" [(ngModel)]="toDate" name="myDate2" [matDatepicker]="picker2" placeholder="To">
-      <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-      <mat-datepicker #picker2></mat-datepicker>
-    </mat-form-field>
-  </div>
-  <div class='col-xl-4 col-lg-6'>
-    <button mat-stroked-button   color="warn" (click)='onSubmit()' style="padding-top: 12px;padding-bottom: 5px;" >Choose Date & View Report</button>
-  </div>
+  <app-dashboar-comp  [fromDate]="ffromDate" [toDate]="ttoDate" [agent]="agent" [student]="student" [tableDataShow]="'true'"></app-dashboar-comp>
 </div>
 
-<app-dashboar-comp [fromDate]="ffromDate" [toDate]="ttoDate" [tableDataShow]="'true'"></app-dashboar-comp>
+<div [hidden]= "ViewEmployeeRepChoice" style="display: flex;justify-content: center;">
+  <div class='col-xl-3 col-lg-6'>
+    <mat-form-field class="example-full-width">
+      <input matInput [matDatepickerFilter]="myFilter" [(ngModel)]="counselorfromDate" name="myDate3" [matDatepicker]="picker3" placeholder="From">
+      <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+      <mat-datepicker #picker3></mat-datepicker>
+    </mat-form-field>
+  </div>
+
+  <div class='col-xl-3 col-lg-6'>
+    <mat-form-field class="example-full-width">
+      <input matInput [matDatepickerFilter]="myFilter" [(ngModel)]="counselortoDate" name="myDate4" [matDatepicker]="picker4" placeholder="To">
+      <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
+      <mat-datepicker #picker4></mat-datepicker>
+    </mat-form-field>
+  </div>
+  <div class='col-xl-3 col-lg-6' [hidden] = "employeerepdropdown">
+    <app-select-search [formControlnam]="'employeename'" [preVal]="selectsearchval4" (outputval)="SelectvalChanged4($event)"  [list]= "employeelist"></app-select-search>
+  </div>
+  <div class='col-xl-3 col-lg-6'>
+    <button mat-stroked-button   color="warn" (click)='onEmployeeSubmit()' style="padding-top: 5px;padding-bottom: 8px;width: 100%;">View Report</button>
+  </div>
+</div>
+<div [hidden]= "ViewEmployeeRepChoice">
+
+  <div class="row">
+    <div class="col-xl-12 col-lg-12">
+        <div class="card text-white badge-pill bg-dark">
+          <div class="card-header">
+              <div class="row">
+                  <div class="col col-xs-2">
+                      <i class="fa fa-air-freshener fa-5x"></i>
+                  </div>
+                  <div class="col col-xs-10 text-right">
+                      <div class="d-block huge">Total amount Sold: {{totalsales}}</div>
+                      <div class="d-block" style="color: yellow;">Total amount Paid : {{totalpaidam}}</div>
+                      <div class="d-block" style="color: yellow;">Due Between : {{totaldues}}</div>
+                  </div>
+              </div>
+          </div>
+          <div class="card-footer" (click)='salesDetailSubmit()' >
+              <span class="float-left">Employee Sales Detail</span>
+              <a href="javascript:void(0)" class="float-right card-inverse">
+                  <span ><i class="fa fa-arrow-circle-right"></i></span>
+              </a>
+          </div>
+        </div>
+    </div>
+  </div>
+  <br/> <br/>
+  <app-sales-table [salestabhid]='salestabhid' [saleslist]='saleslist' ></app-sales-table>
+
+</div>

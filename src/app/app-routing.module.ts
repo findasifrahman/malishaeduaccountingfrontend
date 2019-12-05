@@ -29,7 +29,7 @@ export function mytokenGetter() {
     JwtModule.forRoot({/* automatically assign bearer token with every http request service*/
       config: {
         tokenGetter: mytokenGetter,
-        whitelistedDomains: ['localhost:8086'],
+        whitelistedDomains: ['localhost:8086','103.218.25.96:8086'],
         blacklistedRoutes: []
       }
     }) ],

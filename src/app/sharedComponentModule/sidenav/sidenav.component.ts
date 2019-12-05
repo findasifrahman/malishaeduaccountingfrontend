@@ -12,6 +12,7 @@ export class SidenavComponent implements OnInit {
   loggedUserName ="U"
   Administrator = "Welcome"
   isShowInventory = true;
+  isShowClient = true;
   isShowOffice = true;
   isShowPayroll = true;
   isShowAccounting = true;
@@ -20,6 +21,9 @@ export class SidenavComponent implements OnInit {
   }
   toggleDisplayInventory(){
     this.isShowInventory = !this.isShowInventory;
+  }
+  toggleDisplayClient(){
+      this.isShowClient = !this.isShowClient ;
   }
   toggleDisplayOffice(){
     this.isShowOffice = !this.isShowOffice;

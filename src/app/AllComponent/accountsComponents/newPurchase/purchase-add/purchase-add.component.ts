@@ -18,10 +18,10 @@ export class PurchaseAddComponent implements OnInit {
   Forms: FormGroup;
   selectFormControl = new FormControl('', Validators.required);
   incomeTypelist: any[];
-  clientlist: any[];
-  selectsearchval1: string;
+  emplist: any[];
+  //selectsearchval1: string;
   selectsearchval2: string;
-  selectsearchval3: string;
+  //selectsearchval3: string;
   constructor(private PURCHASEservice: PurchaseService,private snackBar: MatSnackBar,
     private formBuilder: FormBuilder, private isourceService: IncoomeSourceService, private cliService: ClientService, private router: Router,
     private PModels:purchasemodels,private loginService:LoginService) { }
@@ -50,23 +50,23 @@ export class PurchaseAddComponent implements OnInit {
       })
     }
 
-
-    SelectvalChanged1(val){
+    SelectvalChanged2(val){
+      this.selectsearchval2 = val;
+    }
+    /*SelectvalChanged1(val){
       const va =this.clientlist.find(x => x.clientId === val).clientname
       this.Forms.patchValue({clientName: va});
       this.selectsearchval1 = val;
       this.selectsearchval3 = va;
     }
-    SelectvalChanged2(val){
-      this.selectsearchval2 = val;
-    }
+
     SelectvalChanged3(val){
       console.log("in sel val 3 -- ", val)
       const va =this.clientlist.find(x => x.clientname === val).clientId
       this.Forms.patchValue({clientid: va});
       this.selectsearchval1 = va;
       this.selectsearchval3 = val;
-    }
+    }*/
     ngOnInit() {
       this.Forms = this.PModels.modelForms;
       this.Forms.reset();
@@ -74,17 +74,17 @@ export class PurchaseAddComponent implements OnInit {
         this.incomeTypelist = posts as any;
         console.log(posts);
       });
-      this.cliService.getAll().subscribe((posts) => {
+      /*this.cliService.getAll().subscribe((posts) => {
         this.clientlist= posts as any;
-      });
+      });*/
       this.onChanges();
     }
 
     async FormSubmit() {
       this.Forms.patchValue({
-        clientid: this.selectsearchval1,
+        clientid: "",//this.selectsearchval1,
         incomeType: this.selectsearchval2,
-        clientName: this.selectsearchval3,
+        clientName: "",//this.selectsearchval3,
         loggeduser: this.loginService.getUser()
       })
       const formValue = this.Forms.value;
