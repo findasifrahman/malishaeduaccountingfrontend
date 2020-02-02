@@ -27,16 +27,26 @@ export class ClientAddComponent implements OnInit {
   universitylist: any;
   degreelist: any;
   employeelist: any;
+  unitlist = ["RMB", "BDT", "USD"]
   selectFormControl = new FormControl('', Validators.required);
   selectsearchval1: string;
   constructor(private clientmodels: clientmodels,private snackBar:MatSnackBar,private cgService: ClientGroupService,
     private cliService: ClientService,private formBuilder: FormBuilder, private router: Router,
     private majorService: MajorService, private  nationalityService:NationalityService, private universityService:UniversityService,
     private empService:EmployeeService,private degreeService:DegreeService ) { }
-
+    private formatDate(date) {
+      const d = new Date(date);
+      let month = '' + (d.getMonth() + 1);
+      let day = '' + d.getDate();
+      const year = d.getFullYear();
+      if (month.length < 2) month = '0' + month;
+      if (day.length < 2) day = '0' + day;
+      return [year, month, day].join('-');
+    }
     ngOnInit() {
       this.Forms = this.clientmodels.modelForms;
       this.Forms.reset();
+      this.Forms.patchValue({date: this.formatDate(new Date())})
       this.cgService.getAll().subscribe(data =>{
         this.cglist = data as any
       })
@@ -65,8 +75,17 @@ export class ClientAddComponent implements OnInit {
       })
       const clientgroup = this.Forms.get('clientgroupname').value
       const student = this.Forms.get('studentname').value
+      const passportval = this.Forms.get('passport').value
       if(this.allclient.find(x=> (x.clientgroupname == clientgroup && x.studentname == student))){
         this.snackBar.open('Agent and student name allready exist', "Remove", {
+          duration: 4000,
+          verticalPosition: 'top',
+          panelClass: ['red-snackbar']
+        });
+        return
+      }
+      if(this.allclient.find(x=> (x.passport == passportval))){
+        this.snackBar.open('Passport value allready exist', "Remove", {
           duration: 4000,
           verticalPosition: 'top',
           panelClass: ['red-snackbar']

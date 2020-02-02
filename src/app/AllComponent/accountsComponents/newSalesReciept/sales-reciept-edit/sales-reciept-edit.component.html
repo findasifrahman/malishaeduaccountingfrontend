@@ -33,15 +33,15 @@
         </ng-template>
 
         <mat-form-field floatLabel="options.value.floatLabel">
-          <mat-label>Paid Amount</mat-label>
+          <mat-label>Paid Amount. Unit: {{moneyunit}}</mat-label>
           <input matInput placeholder="Paid Amount" type="Number" formControlName="paidAmount" required>
         </mat-form-field>
         <mat-form-field floatLabel="options.value.floatLabel">
-          <mat-label>Prev Dues</mat-label>
+          <mat-label>Prev Dues. Unit: {{moneyunit}}</mat-label>
           <input matInput placeholder="Prev Dues" type="Number" formControlName="prevdues" >
         </mat-form-field>
         <mat-form-field floatLabel="options.value.floatLabel">
-          <mat-label>Current Dues</mat-label>
+          <mat-label>Current Dues. Unit: {{moneyunit}}</mat-label>
           <input matInput placeholder="Current Dues" type="Number" formControlName="currentdues" >
         </mat-form-field>
 

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient,HttpParams,HttpHeaders } from '@angular/common/http';
 import { routeurls } from '../../routeurls/routeurls';
-import { Observable } from 'rxjs';
-
+import { Observable,of } from 'rxjs';
+import { map,catchError,retry } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
@@ -21,6 +21,72 @@ export class ClientService {
   }
   getbyclient(id: any): Observable<any> {
     return this.http.get<any>(routeurls.BASE_API_URL + routeurls.CLIENT_API_BASE_URL+ "/getbyclient", { params: new HttpParams().set('id', id) });
+  }
+  getbydate(dat1,dat2): Observable<any> {
+    return this.http.get<any>(routeurls.BASE_API_URL + routeurls.CLIENT_API_BASE_URL + "/getbydate", { params: new HttpParams().set('date1', dat1).set('date2',dat2) })
+    .pipe(
+      retry(3),
+      map(res => {
+        if (!res) {
+          throw new Error('Value expected!');
+        }
+        return res;
+      }),
+      catchError(err => of([]))
+    );
+  }
+  getbydateclient(dat1,dat2, client): Observable<any> {
+    return this.http.get<any>(routeurls.BASE_API_URL + routeurls.CLIENT_API_BASE_URL + "/getbydateclient", { params: new HttpParams().set('date1', dat1).set('date2',dat2).set('client',client) })
+    .pipe(
+      retry(3),
+      map(res => {
+        if (!res) {
+          throw new Error('Value expected!');
+        }
+        return res;
+      }),
+      catchError(err => of([]))
+    );
+  }
+  getbydateemployee(dat1,dat2, employee): Observable<any> {
+    return this.http.get<any>(routeurls.BASE_API_URL + routeurls.CLIENT_API_BASE_URL + "/getbydateemployee", { params: new HttpParams().set('date1', dat1).set('date2',dat2).set('employee',employee) })
+    .pipe(
+      retry(3),
+      map(res => {
+        if (!res) {
+          throw new Error('Value expected!');
+        }
+        return res;
+      }),
+      catchError(err => of([]))
+    );
+  }
+  getbyclientstudent(clientName: any,student): Observable<any> {
+    return this.http.get<any>(routeurls.BASE_API_URL + routeurls.CLIENT_API_BASE_URL + "/getbyclientstudent", { params: new HttpParams().set('studentname', student).set('client', clientName)  }).pipe(
+      retry(3),
+      map(res => {
+        console.log(res);
+        if (!res) {
+          throw new Error('Value expected!');
+        }
+        console.log(res);
+        return res;
+      }),
+      catchError(err => of([]))
+    );
+  }
+  getbydateclientstudent(dat1,dat2, client,student): Observable<any> {
+    return this.http.get<any>(routeurls.BASE_API_URL + routeurls.CLIENT_API_BASE_URL + "/getbydateclientstudent", { params: new HttpParams().set('date1', dat1).set('date2',dat2).set('client',client).set('student',student) })
+    .pipe(
+      retry(3),
+      map(res => {
+        if (!res) {
+          throw new Error('Value expected!');
+        }
+        return res;
+      }),
+      catchError(err => of([]))
+    );
   }
   update(id: any, obj: any): Observable<any> {
     obj.Id = id;

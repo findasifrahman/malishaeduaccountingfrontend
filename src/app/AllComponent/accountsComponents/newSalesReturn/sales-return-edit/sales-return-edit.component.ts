@@ -1,21 +1,20 @@
 import { Component, OnInit, ViewChild, ɵConsole } from '@angular/core';
 import {  FormBuilder, Validators, FormGroup,FormControl,FormArray } from '@angular/forms';
-import {  SalesRecieptService  } from '../sales-reciept.service';
+import {  SalesReturnService  } from '../sales-return.service';
 import { Router,ActivatedRoute } from '@angular/router';
 import { __await } from 'tslib';
 import { MatSnackBar } from '@angular/material';
-import { salesrecieptmodels } from '../../../../models/salesrecieptmodels';
+import { salesReturnmodels } from '../../../../models/salesreturnmodels';
 import { ClientGroupService } from '../../../settingsComponents/NewClientGroup/client-group.service';
 import { ClientService } from '../../../settingsComponents/NewClient/client.service'
 import { LoginService } from '../../../login/login.service'
-//import { SalesVoucherService } from '../../newSalesVoucher/sales-voucher.service';
-import {  SalesReturnService  } from '../../newSalesReturn/sales-return.service';
+import { SalesRecieptService } from '../../newSalesReciept/sales-reciept.service'
 @Component({
-  selector: 'app-sales-reciept-edit',
-  templateUrl: './sales-reciept-edit.component.html',
-  styleUrls: ['./sales-reciept-edit.component.scss']
+  selector: 'app-sales-return-edit',
+  templateUrl: './sales-return-edit.component.html',
+  styleUrls: ['./sales-return-edit.component.scss']
 })
-export class SalesRecieptEditComponent implements OnInit {
+export class SalesReturnEditComponent implements OnInit {
   id: any;
   Forms: FormGroup;
   selectFormControl = new FormControl('', Validators.required);
@@ -24,11 +23,11 @@ export class SalesRecieptEditComponent implements OnInit {
   studentlist: any[];
   selectsearchval1: string;
   selectsearchval3: string;
-  moneyunit: string = ""
-  constructor(private salesRecieptservice:  SalesRecieptService ,private snackBar: MatSnackBar,
-    private formBuilder: FormBuilder, private salesReturnservice:  SalesReturnService,
+  moneyunit: string = "";
+  constructor(private salesReturnservice:  SalesReturnService ,private snackBar: MatSnackBar,private salesRecieptService:SalesRecieptService,
+    private formBuilder: FormBuilder, //private salesvocherservice: SalesVoucherService,
     private clientgroupService: ClientGroupService,private clientService: ClientService, private router: Router,
-    private srModels:salesrecieptmodels, private loginService:LoginService, private route: ActivatedRoute) { }
+    private salesreturnmodels:salesReturnmodels, private loginService:LoginService, private route: ActivatedRoute) { }
 
     SelectvalChanged1(val){
       // client group changed
@@ -42,10 +41,10 @@ export class SalesRecieptEditComponent implements OnInit {
       this.Forms.patchValue({
         prevdues: 0,
         currentdues: 0,
-        paidAmount:0
+        returnAmount:0
       });
       this.clientService.getbyclientstudent(this.selectsearchval1,val).subscribe((voucherposts) => {
-        this.salesRecieptservice.getbyclientstudent(this.selectsearchval1,val).subscribe(recieptposts =>{
+        this.salesRecieptService.getbyclientstudent(this.selectsearchval1,val).subscribe(recieptposts =>{
           this.salesReturnservice.getbyclientstudent(this.selectsearchval1,val).subscribe(returnposts =>{
               let ta = 0;
               let pa = 0; //paid amount
@@ -67,23 +66,23 @@ export class SalesRecieptEditComponent implements OnInit {
         })
       });
     }
-    paidamchanges(){
-      const pa = this.Forms.get('paidAmount').value
+    returnamchanges(){
+      const ra = this.Forms.get('returnAmount').value
       const pd = this.Forms.get('prevdues').value
       this.Forms.patchValue({
-        currentdues: pd - pa,
+        currentdues: pd + ra,
       });
     }
     onChanges(): void {
-      this.Forms.get('paidAmount').valueChanges.subscribe(val => {
-        this.paidamchanges()
+      this.Forms.get('returnAmount').valueChanges.subscribe(val => {
+        this.returnamchanges()
       })
       this.Forms.get('prevdues').valueChanges.subscribe(val => {
-        this.paidamchanges()
+        this.returnamchanges()
       })
     }
     ngOnInit() {
-      this.Forms = this.srModels.modelForms;
+      this.Forms = this.salesreturnmodels.modelForms;
       this.clientService.getAll().subscribe((posts) => {
         this.allstudentlist = posts as any;
         this.studentlist = posts as any;
@@ -95,7 +94,7 @@ export class SalesRecieptEditComponent implements OnInit {
       this.route.params.subscribe(params => {
         this.id = params['id'];
         console.log("update id--" + params['id']);
-        this.salesRecieptservice.getbyid(this.id).subscribe((data) => {
+        this.salesReturnservice.getbyid(this.id).subscribe((data) => {
           this.selectsearchval1 = data["studentoragentName"];
           this.selectsearchval3 = data["studentname"];
           this.Forms.patchValue(data);
@@ -126,15 +125,15 @@ export class SalesRecieptEditComponent implements OnInit {
       })
       const formValue = this.Forms.value;
       try {
-        await this.salesRecieptservice.update(this.id, formValue).subscribe(
+        await this.salesReturnservice.update(this.id, formValue).subscribe(
           data => {
             console.log("Update req successfull");
-            this.snackBar.open('Data Added Successfully', "Remove", {
+            this.snackBar.open('Data Updated Successfully', "Remove", {
               duration: 6000,
               verticalPosition: 'top',
               panelClass: ['blue-snackbar']
             });
-            this.router.navigate(["/salesreciept/list"]);
+            this.router.navigate(["/salesreturn/list"]);
           },
           error => {
             console.log("error post", error);

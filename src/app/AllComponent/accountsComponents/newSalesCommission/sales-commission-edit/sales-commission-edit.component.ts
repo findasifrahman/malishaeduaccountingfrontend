@@ -7,9 +7,9 @@ import { MatSnackBar } from '@angular/material';
 import { ClientGroupService } from '../../../settingsComponents/NewClientGroup/client-group.service'
 import { LoginService } from '../../../login/login.service'
 import { salescommissionmodels } from 'src/app/models/salescommissionmodels';
-import { SalesVoucherService } from '../../newSalesVoucher/sales-voucher.service'
+//import { SalesVoucherService } from '../../newSalesVoucher/sales-voucher.service'
 import { SalesRecieptService } from '../../newSalesReciept/sales-reciept.service'
-
+import { ClientService } from '../../../settingsComponents/NewClient/client.service'
 @Component({
   selector: 'app-sales-commission-edit',
   templateUrl: './sales-commission-edit.component.html',
@@ -23,10 +23,13 @@ export class SalesCommissionEditComponent implements OnInit {
   clientgrlist: any[];
   salescomlist: any[];
   selectsearchval1: string;
+  salestabhid: boolean = true;
+  saleslist: any[];
   constructor(private scservice: SalesCommissionService,private snackBar: MatSnackBar,
     private formBuilder: FormBuilder, private cligrService: ClientGroupService, private router: Router,
     private salescomodels:salescommissionmodels,private loginService:LoginService,
-    private salesvoucheservice: SalesVoucherService,private salesRecieptservice:  SalesRecieptService,private route: ActivatedRoute ) { }
+    //private salesvoucheservice: SalesVoucherService,
+    private salesRecieptservice:  SalesRecieptService,private route: ActivatedRoute, private clientServices:ClientService ) { }
     SelectvalChanged1(val){
       this.selectsearchval1 = val;
       //const va =this.clientlist.find(x => x.clientId === val).clientname
@@ -52,14 +55,15 @@ export class SalesCommissionEditComponent implements OnInit {
       const serval = this.selectsearchval1;
       if(toval){
         if(this.selectsearchval1){
-          this.salesvoucheservice.getbydateclient(frval,toval,serval).subscribe(voucherposts =>{
+          this.clientServices.getbydateclient(frval,toval,serval).subscribe(voucherposts =>{
             //
             this.salesRecieptservice.getbydateclient(frval,toval,serval).subscribe(recieptposts =>{
+              this.saleslist = voucherposts;
               let ta = 0;
               let pa = 0; //paid amount
               voucherposts.forEach(function (value) {
-                  ta = ta + value.packageAmount,
-                  pa = pa + value.paidAmount
+                  ta = ta + value.packageAmount
+                  //pa = pa + value.paidAmount
               });
               recieptposts.forEach(function(value){
                   pa = pa + value.paidAmount
@@ -68,6 +72,17 @@ export class SalesCommissionEditComponent implements OnInit {
                 totalamount: ta,
                 dueamount: ta - pa,
               });
+
+              let firindex = 0;
+              this.salestabhid = false
+              this.saleslist.forEach(val=>{
+                //this.saleslist[firindex]["recieptPay"] = recieptposts.filter(rv => (rv.studentname == val.studentname && rv.studentoragentName == val.studentoragentName)).reduce((a, b) => a + (b["paidAmount"] || 0), 0);
+                this.saleslist[firindex]["total"] = val.paidAmount + recieptposts.filter(rv =>(rv.studentname == val.studentname && rv.studentoragentName == val.clientgroupname)).reduce((a, b) => a + (b["paidAmount"] || 0), 0);
+                this.saleslist[firindex]["TotDue"] = val.packageAmount - (val.paidAmount + recieptposts.filter(rv =>(rv.studentname == val.studentname && rv.studentoragentName == val.clientgroupname)).reduce((a, b) => a + (b["paidAmount"] || 0), 0));
+                firindex++;
+              })
+
+
             })
             //
           })

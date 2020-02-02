@@ -22,8 +22,7 @@ export interface clientinterface {
 export class clientmodels {
   modelForms: FormGroup = this.formBuilder.group({
     clientgroupname: [""],
-    clientname: [""],// not used
-    clientId: [""], //not used
+    date: [""],
     address: [""],
     source:[""], // facebook source
     servedby:[""], // employee who served
@@ -35,7 +34,8 @@ export class clientmodels {
     university:[""],
     degree:[""],
     major:[""],
-    packageamount:[0]
+    packageAmount:[0],
+    unit: [""]
   });
 
   constructor(private formBuilder: FormBuilder) {}

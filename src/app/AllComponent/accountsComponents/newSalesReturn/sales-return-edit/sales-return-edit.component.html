@@ -1,5 +1,5 @@
 
-<h3 style="text-align:center;color:cadetblue;font-family:Tahoma">Add Sales Reciept </h3>
+<h3 style="text-align:center;color:cadetblue;font-family:Tahoma">Edit Sales Return </h3>
 
 <br />
 <form class="example-container" [formGroup]="Forms">
@@ -7,17 +7,17 @@
     <mat-tab-group mat-stretch-tabs class="example-stretched-tabs " #matgroup>
       <mat-tab>
         <ng-template mat-tab-label>
-          Reciept Detail
+          Return Detail
         </ng-template>
         <mat-form-field floatLabel="options.value.floatLabel">
-          <mat-label>Reciept No</mat-label>
-          <input matInput placeholder="No" type="Text" formControlName="recieptid" required>
+          <mat-label>Return No</mat-label>
+          <input matInput placeholder="No" type="Text" formControlName="returnid" required>
         </mat-form-field>
         <app-select-search [formControlnam]="'clientgroupname'" [preVal]="selectsearchval1" (outputval)="SelectvalChanged1($event)"  [list]= "clientgrouplist"></app-select-search>
         <app-select-search [formControlnam]="'studentname'" [preVal]="selectsearchval3" (outputval)="SelectvalChanged3($event)"  [list]= "studentlist"></app-select-search>
         <mat-form-field floatLabel="options.value.floatLabel">
           <mat-label>date</mat-label>
-          <input matInput placeholder="Phone" type="date" formControlName="date">
+          <input matInput placeholder="date" type="date" formControlName="date">
         </mat-form-field>
         <br/>
         <mat-form-field floatLabel="options.value.floatLabel">
@@ -33,8 +33,8 @@
         </ng-template>
 
         <mat-form-field floatLabel="options.value.floatLabel">
-          <mat-label>Paid Amount. Unit: {{moneyunit}}</mat-label>
-          <input matInput placeholder="Paid Amount" type="Number" formControlName="paidAmount" required>
+        <mat-label>Return Amount. Unit: {{moneyunit}}</mat-label>
+          <input matInput placeholder="Return Amount" type="Number" formControlName="returnAmount" required>
         </mat-form-field>
         <mat-form-field floatLabel="options.value.floatLabel">
           <mat-label>Prev Dues. Unit: {{moneyunit}}</mat-label>

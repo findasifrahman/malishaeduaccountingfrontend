@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { SalesVoucherService } from '../../accountsComponents/newSalesVoucher/sales-voucher.service'
+//import { SalesVoucherService } from '../../accountsComponents/newSalesVoucher/sales-voucher.service'
 import { SalesRecieptService } from '../../accountsComponents/newSalesReciept/sales-reciept.service'
 import { PurchaseService } from '../../accountsComponents/newPurchase/purchase.service'
 import { PayrollService } from '../../hrComponents/newPayroll/payroll.service'
@@ -8,7 +8,8 @@ import { InventoryItemService } from '../../settingsComponents/NewInventoryItem/
 import  { OfficeCostService } from '../../officecostComponent/office-cost.service'
 import {  reduce } from 'rxjs/operators';
 import { LoginService } from '../../login/login.service'
-
+import { ClientService } from '../../settingsComponents/NewClient/client.service'
+import {  SalesReturnService  } from '../../accountsComponents/newSalesReturn/sales-return.service';
 @Component({
   selector: 'app-dashboar-comp',
   templateUrl: './dashboar-comp.component.html',
@@ -39,6 +40,7 @@ export class DashboarCompComponent implements OnInit {
 
   totalsales = 0;
   totalpaidam = 0;
+  totalreturnam = 0
   totaldues = 0;
   totalPurchase = 0;
   totalpayroll = 0;
@@ -58,7 +60,8 @@ export class DashboarCompComponent implements OnInit {
 
   loggeduser = ""
   inve: inventoryListobj[] = <any>[];
-  constructor(private svService: SalesVoucherService, private pService: PurchaseService,
+  constructor(//private svService: SalesVoucherService,
+    private clientService:ClientService, private pService: PurchaseService,private salesReturnservice:  SalesReturnService,
     private payService: PayrollService, private iservice: InventoryService,private inventoryItemservice: InventoryItemService,
     private ofiicecostService:OfficeCostService,private salesRecieptService: SalesRecieptService,private logService: LoginService){}
   async ngOnInit() {
@@ -129,21 +132,29 @@ export class DashboarCompComponent implements OnInit {
     })
   }
   public submitbyclientstudent(): void{
-    this.svService. getbydateclientstudent(this.fromDate,this.toDate,this.agent,this.student).subscribe((voucherposts) =>{
+    this.clientService.getbydateclientstudent(this.fromDate,this.toDate,this.agent,this.student).subscribe((voucherposts) =>{
       this.salesRecieptService. getbydateclientstudent(this.fromDate,this.toDate,this.agent,this.student).subscribe(recpos=>{
-        this.saleslist = voucherposts;
-        this.totalsales = voucherposts.reduce((a, b) => a + (b["packageAmount"] || 0), 0);
-        this.totalpaidam = voucherposts.reduce((a, b) => a + (b["paidAmount"] || 0), 0) +
-          recpos.reduce((a, b) => a + (b["paidAmount"] || 0), 0);
-        this.totaldues = this.totalsales - this.totalpaidam;
-        let firindex = 0;
-        this.saleslist.forEach(val=>{
-          this.saleslist[firindex]["recieptPay"] = recpos.filter(rv =>rv.studentname == val.studentname).reduce((a, b) => a + (b["paidAmount"] || 0), 0);
-          this.saleslist[firindex]["total"] = val.paidAmount + recpos.filter(rv =>rv.studentname == val.studentname).reduce((a, b) => a + (b["paidAmount"] || 0), 0);
-          firindex++;
-          console.log(recpos.filter(rv =>rv.studentname == val.studentname))
-        })
-        //console.log(this.saleslist)
+        this.salesReturnservice.getbydateclientstudent(this.fromDate,this.toDate,this.agent,this.student).subscribe(returnposts =>{
+              this.saleslist = voucherposts;
+              this.totalsales = voucherposts.reduce((a, b) => a + (b["packageAmount"] || 0), 0);
+              this.totalpaidam =  recpos.reduce((a, b) => a + (b["paidAmount"] || 0), 0);
+              this.totalreturnam =  returnposts.reduce((a, b) => a + (b["returnAmount"] || 0), 0);
+              this.totaldues =(this.totalsales + this.totalreturnam) - this.totalpaidam;
+              let firindex = 0;
+              this.saleslist.forEach(val=>{
+                let totremam = returnposts.filter(rv =>(rv.studentname == val.studentname && rv.studentoragentName == val.clientgroupname)).reduce((a, b) => a + (b["returnAmount"] || 0), 0);
+                let totsaleam = recpos.filter(rv =>rv.studentname == val.studentname && rv.studentoragentName == val.clientgroupname).reduce((a, b) => a + (b["paidAmount"] || 0), 0);
+                //this.saleslist[firindex]["recieptPay"] = recpos.filter(rv =>rv.studentname == val.studentname).reduce((a, b) => a + (b["paidAmount"] || 0), 0);
+                this.saleslist[firindex]["return"] = totremam
+                this.saleslist[firindex]["total"] = totsaleam
+                this.saleslist[firindex]["TotDue"] = (val.packageAmount + totremam) - totsaleam;
+
+                firindex++;
+                console.log(recpos.filter(rv =>rv.studentname == val.studentname))
+              })
+              console.log(this.saleslist)
+              //console.log("this.saleslist")
+          })
       })
     })
 
@@ -151,19 +162,28 @@ export class DashboarCompComponent implements OnInit {
     this.commonRep()
   }
   public submitbyclient(): void{
-    this.svService.getbydateclient(this.fromDate,this.toDate,this.agent).subscribe((voucherposts) =>{
+    this.clientService.getbydateclient(this.fromDate,this.toDate,this.agent).subscribe((voucherposts) =>{
+
       this.salesRecieptService.getbydateclient(this.fromDate,this.toDate,this.agent).subscribe(recpos=>{
-        this.saleslist = voucherposts;
-        this.totalsales = voucherposts.reduce((a, b) => a + (b["packageAmount"] || 0), 0);
-        this.totalpaidam = voucherposts.reduce((a, b) => a + (b["paidAmount"] || 0), 0) +
-          recpos.reduce((a, b) => a + (b["paidAmount"] || 0), 0);
-        this.totaldues = this.totalsales - this.totalpaidam;
-        let firindex = 0;
-        this.saleslist.forEach(val=>{
-          this.saleslist[firindex]["recieptPay"] = recpos.filter(rv =>rv.studentname == val.studentname).reduce((a, b) => a + (b["paidAmount"] || 0), 0);
-          this.saleslist[firindex]["total"] = val.paidAmount + recpos.filter(rv =>rv.studentname == val.studentname).reduce((a, b) => a + (b["paidAmount"] || 0), 0);
-          firindex++;
-          console.log(recpos.filter(rv =>rv.studentname == val.studentname))
+        this.salesReturnservice.getbydateclient(this.fromDate,this.toDate,this.agent).subscribe(returnposts =>{
+            this.saleslist = voucherposts;
+            this.totalsales = voucherposts.reduce((a, b) => a + (b["packageAmount"] || 0), 0);
+            this.totalpaidam = recpos.reduce((a, b) => a + (b["paidAmount"] || 0), 0);
+            this.totalreturnam =  returnposts.reduce((a, b) => a + (b["returnAmount"] || 0), 0);
+            this.totaldues = (this.totalsales + this.totalreturnam) - this.totalpaidam;
+
+            let firindex = 0;
+            this.saleslist.forEach(val=>{
+              let totremam = returnposts.filter(rv =>(rv.studentname == val.studentname && rv.studentoragentName == val.clientgroupname)).reduce((a, b) => a + (b["returnAmount"] || 0), 0);
+              let totsaleam = recpos.filter(rv =>rv.studentname == val.studentname && rv.studentoragentName == val.clientgroupname).reduce((a, b) => a + (b["paidAmount"] || 0), 0);
+              //this.saleslist[firindex]["recieptPay"] = recpos.filter(rv =>rv.studentname == val.studentname).reduce((a, b) => a + (b["paidAmount"] || 0), 0);
+              this.saleslist[firindex]["return"] = totremam
+              this.saleslist[firindex]["total"] = totsaleam
+              this.saleslist[firindex]["TotDue"] = (val.packageAmount + totremam) - totsaleam;
+
+              firindex++;
+              console.log(recpos.filter(rv =>rv.studentname == val.studentname))
+            })
         })
         //console.log(this.saleslist)
       })
@@ -173,22 +193,31 @@ export class DashboarCompComponent implements OnInit {
     this.commonRep()
   }
   public onSubmit(): void {
-    this.svService.getbydate(this.fromDate,this.toDate).subscribe((voucherposts) =>{
-      this.salesRecieptService.getbydate(this.fromDate,this.toDate).subscribe(recpos=>{
-        this.saleslist = voucherposts;
-        this.totalsales = voucherposts.reduce((a, b) => a + (b["packageAmount"] || 0), 0);
-        this.totalpaidam = voucherposts.reduce((a, b) => a + (b["paidAmount"] || 0), 0) +
-          recpos.reduce((a, b) => a + (b["paidAmount"] || 0), 0);
-        this.totaldues = this.totalsales - this.totalpaidam;
+    this.clientService.getbydate(this.fromDate,this.toDate).subscribe((voucherposts) =>{
 
-        let firindex = 0;
-        this.saleslist.forEach(val=>{
-          this.saleslist[firindex]["recieptPay"] = recpos.filter(rv => (rv.studentname == val.studentname && rv.studentoragentName == val.studentoragentName)).reduce((a, b) => a + (b["paidAmount"] || 0), 0);
-          this.saleslist[firindex]["total"] = val.paidAmount + recpos.filter(rv =>(rv.studentname == val.studentname && rv.studentoragentName == val.studentoragentName)).reduce((a, b) => a + (b["paidAmount"] || 0), 0);
-          firindex++;
-          console.log(recpos.filter(rv =>rv.studentname == val.studentname))
+      this.salesRecieptService.getbydate(this.fromDate,this.toDate).subscribe(recpos=>{
+        this.salesReturnservice.getbydate(this.fromDate,this.toDate).subscribe(returnposts =>{
+            this.saleslist = voucherposts;
+            this.totalsales = voucherposts.reduce((a, b) => a + (b["packageAmount"] || 0), 0);
+            this.totalpaidam = recpos.reduce((a, b) => a + (b["paidAmount"] || 0), 0);
+            this.totalreturnam =  returnposts.reduce((a, b) => a + (b["returnAmount"] || 0), 0);
+            this.totaldues = (this.totalsales + this.totalreturnam) - this.totalpaidam;
+
+            let firindex = 0;
+            this.saleslist.forEach(val=>{
+              let totremam = returnposts.filter(rv =>(rv.studentname == val.studentname && rv.studentoragentName == val.clientgroupname)).reduce((a, b) => a + (b["returnAmount"] || 0), 0);
+              let totsaleam = recpos.filter(rv =>rv.studentname == val.studentname && rv.studentoragentName == val.clientgroupname).reduce((a, b) => a + (b["paidAmount"] || 0), 0);
+              //this.saleslist[firindex]["recieptPay"] = recpos.filter(rv =>rv.studentname == val.studentname).reduce((a, b) => a + (b["paidAmount"] || 0), 0);
+              this.saleslist[firindex]["return"] = totremam
+              this.saleslist[firindex]["total"] = totsaleam
+              this.saleslist[firindex]["TotDue"] = (val.packageAmount + totremam) - totsaleam;
+
+              firindex++;
+              console.log(totremam )
+            })
         })
       })
+
     })
     this.commonRep()
   }

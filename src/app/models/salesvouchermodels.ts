@@ -35,8 +35,6 @@ export class salesVouchermodels {
     //issuedemployee: [""],
     loggeduser:[""],
     date: ["", Validators.required],
-    clientid: [""], //not needed
-    clientName: [""], //not needed
     incomeType: [''],
     packageAmount: [0], //auto generate from client
     paidAmount: [0],

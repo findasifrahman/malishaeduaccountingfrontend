@@ -1,5 +1,5 @@
 export const routeurls = Object.freeze({
-  BASE_API_URL: 'http://localhost:5021',//'http://103.218.25.96:5021',//'http://localhost:8086'
+  BASE_API_URL: 'http://103.218.25.96:5021',//'http://localhost:5021',//'http://103.218.25.96:5021',//'http://localhost:8086'
   PICTURE_VIEW_URL: "/picture/getpic?picid=",
   FILE_UPLOAD_BASE_URL:"/picture/upload",
   FILE_DELETE_BASE_URL:"/picture/delete",
@@ -22,6 +22,7 @@ export const routeurls = Object.freeze({
   PURPOSE_API_BASE_URL: "/api/purpose",
   SALES_COMMISSION_API_BASE_URL: "/api/commission",
   SALES_RECIEPT_API_BASE_URL: "/api/salesreciept",
+  SALES_RETURN_API_BASE_URL: "/api/salesreturn",
   UNIVERSITY_API_BASE_URL: "/api/university",
   MAJOR_API_BASE_URL: "/api/major",
   NATIONALITY_API_BASE_URL: "/api/nationality",

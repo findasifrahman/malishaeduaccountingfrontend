@@ -19,17 +19,23 @@
                   <i><mat-icon aria-hidden="false">details</mat-icon></i> Accounting
                 </a>
                 <div style="padding-top: 0 !important;" class="nav-link nav-dropdown-toggle" [hidden] = "isShowAccounting">
-                  <li class="nav-item" >
+                 <!-- <li class="nav-item" >
                     <a style="text-align:left;display: inline-flex;" class="nav-link" [routerLink]='["/salesVoucher/add"]'><i><mat-icon aria-hidden="false">view_comfy</mat-icon></i>Add Sales</a>
                   </li>
                   <li class="nav-item">
                     <a style="text-align:left;display: inline-flex;" class="nav-link" [routerLink]='["/salesVoucher/list"]'><i><mat-icon aria-hidden="false">broken_image</mat-icon></i>Sales List</a>
-                  </li>
+                  </li> -->
                   <li class="nav-item" >
                     <a style="text-align:left;display: inline-flex;" class="nav-link" [routerLink]='["/salesreciept/add"]'><i><mat-icon aria-hidden="false">shopping_basket</mat-icon></i>Add SalesReciept</a>
                   </li>
                   <li class="nav-item">
                     <a style="text-align:left;display: inline-flex;" class="nav-link" [routerLink]='["/salesreciept/list"]'><i><mat-icon aria-hidden="false">theaters</mat-icon></i>SalesRecipt List</a>
+                  </li>
+                  <li class="nav-item" >
+                    <a style="text-align:left;display: inline-flex;" class="nav-link" [routerLink]='["/salesreturn/add"]'><i><mat-icon aria-hidden="false">view_comfy</mat-icon></i>Add Sales Return</a>
+                  </li>
+                  <li class="nav-item">
+                    <a style="text-align:left;display: inline-flex;" class="nav-link" [routerLink]='["/salesreturn/list"]'><i><mat-icon aria-hidden="false">broken_image</mat-icon></i>Sales Return List</a>
                   </li>
                   <li class="nav-item" >
                       <a style="text-align:left;display: inline-flex;" class="nav-link" [routerLink]='["/salescommission/add"]'><i><mat-icon aria-hidden="false">speed</mat-icon></i>Add SalesComm</a>
@@ -94,6 +100,13 @@
               </a>
               <div style="padding-top: 0 !important;" class="nav-link nav-dropdown-toggle" [hidden] = "isShowClient">
                 <li class="nav-item">
+                  <a style="text-align:left;display: inline-flex;" class="nav-link" [routerLink]='["/client/add"]'><i><mat-icon aria-hidden="false">local_offer</mat-icon></i>Add New Client</a>
+                </li>
+                <li class="nav-item">
+                  <a style="text-align:left;display: inline-flex;" class="nav-link" [routerLink]='["/client/list"]'><i><mat-icon aria-hidden="false">local_florist</mat-icon></i>Client List</a>
+                </li>
+
+                <li class="nav-item">
                   <a style="text-align:left;display: inline-flex;" class="nav-link" [routerLink]='["/clientgroup/add"]'><i><mat-icon aria-hidden="false">subject</mat-icon></i>Add ClientGroup</a>
                 </li>
                 <li class="nav-item">
@@ -129,12 +142,7 @@
                   <a style="text-align:left;display: inline-flex;" class="nav-link" [routerLink]='["/university/list"]'><i><mat-icon aria-hidden="false">toc</mat-icon></i>University List</a>
                 </li>
 
-                <li class="nav-item">
-                    <a style="text-align:left;display: inline-flex;" class="nav-link" [routerLink]='["/client/add"]'><i><mat-icon aria-hidden="false">local_offer</mat-icon></i>Add New Client</a>
-                </li>
-                <li class="nav-item">
-                  <a style="text-align:left;display: inline-flex;" class="nav-link" [routerLink]='["/client/list"]'><i><mat-icon aria-hidden="false">local_florist</mat-icon></i>Client List</a>
-                </li>
+
               </div>
           </li>
 

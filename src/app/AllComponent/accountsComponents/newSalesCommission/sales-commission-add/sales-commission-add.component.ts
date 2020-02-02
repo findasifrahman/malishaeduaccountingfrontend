@@ -7,8 +7,9 @@ import { MatSnackBar } from '@angular/material';
 import { ClientGroupService } from '../../../settingsComponents/NewClientGroup/client-group.service'
 import { LoginService } from '../../../login/login.service'
 import { salescommissionmodels } from 'src/app/models/salescommissionmodels';
-import { SalesVoucherService } from '../../newSalesVoucher/sales-voucher.service'
+import {  SalesReturnService  } from '../../newSalesReturn/sales-return.service';
 import { SalesRecieptService } from '../../newSalesReciept/sales-reciept.service'
+import { ClientService } from '../../../settingsComponents/NewClient/client.service'
 
 @Component({
   selector: 'app-sales-commission-add',
@@ -25,12 +26,25 @@ export class SalesCommissionAddComponent implements OnInit {
   selectsearchval1: string;
   salestabhid: boolean = true;
   fromdatereadonly: boolean = true;
+  values:any[] = []
+
+  saverange($event){
+    console.log("start---------")
+    console.log(this.values)
+    console.log($event)
+    console.log("end------------")
+    this.Forms.patchValue({commission: this.values.reduce((a, b) => a + b, 0)})
+  }
   constructor(private scservice: SalesCommissionService,private snackBar: MatSnackBar,
     private formBuilder: FormBuilder, private cligrService: ClientGroupService, private router: Router,
     private salescomodels:salescommissionmodels,private loginService:LoginService,
-    private salesvoucheservice: SalesVoucherService,private salesRecieptservice:  SalesRecieptService ) { }
+    private salesReturnservice:  SalesReturnService,
+    private salesRecieptservice:  SalesRecieptService, private clientServices:ClientService ) {
+
+    }
     SelectvalChanged1(val){
       this.selectsearchval1 = val;
+      this.values = []
       //const va =this.clientlist.find(x => x.clientId === val).clientname
       //this.Forms.patchValue({clientName: va});
       const lst = this.salescomlist.filter(x => x.agentname === val)
@@ -60,31 +74,40 @@ export class SalesCommissionAddComponent implements OnInit {
       const serval = this.selectsearchval1;
       if(toval){
         if(this.selectsearchval1){
-          this.salesvoucheservice.getbydateclient(frval,toval,serval).subscribe(voucherposts =>{
+          this.clientServices.getbydateclient(frval,toval,serval).subscribe(voucherposts =>{
             //
             this.salesRecieptservice.getbydateclient(frval,toval,serval).subscribe(recieptposts =>{
-              this.saleslist = voucherposts;
-              let ta = 0;
-              let pa = 0; //paid amount
-              voucherposts.forEach(function (value) {
-                  ta = ta + value.packageAmount,
-                  pa = pa + value.paidAmount
-              });
-              recieptposts.forEach(function(value){
-                  pa = pa + value.paidAmount
+              this.salesReturnservice.getbyclientstudent(this.selectsearchval1,serval).subscribe(returnposts =>{
+                  this.saleslist = voucherposts;
+                  let ta = 0;
+                  let pa = 0; //paid amount
+                  let ra = 0;// return amount
+                  voucherposts.forEach(function (value) {
+                      ta = ta + value.packageAmount
+                      //pa = pa + value.paidAmount
+                  });
+                  recieptposts.forEach(function(value){
+                      pa = pa + value.paidAmount
+                  })
+                  returnposts.forEach(val =>{
+                    ra = ra + val.returnAmount
+                  })
+                  this.Forms.patchValue({
+                    totalamount: ta,
+                    dueamount: (ta + ra) - pa,
+                  });
+                  let firindex = 0;
+                  this.salestabhid = false
+                  this.saleslist.forEach(val=>{
+                    let totremam = returnposts.filter(rv =>(rv.studentname == val.studentname && rv.studentoragentName == val.clientgroupname)).reduce((a, b) => a + (b["returnAmount"] || 0), 0);
+                    let totsaleam = recieptposts.filter(rv =>(rv.studentname == val.studentname && rv.studentoragentName == val.clientgroupname)).reduce((a, b) => a + (b["paidAmount"] || 0), 0);
+                    this.saleslist[firindex]["return"] = totremam
+                    //this.saleslist[firindex]["recieptPay"] = recieptposts.filter(rv => (rv.studentname == val.studentname && rv.studentoragentName == val.studentoragentName)).reduce((a, b) => a + (b["paidAmount"] || 0), 0);
+                    this.saleslist[firindex]["total"] = totsaleam
+                    this.saleslist[firindex]["TotDue"] = (val.packageAmount + totremam) - totsaleam;
+                    firindex++;
+                  })
               })
-              this.Forms.patchValue({
-                totalamount: ta,
-                dueamount: ta - pa,
-              });
-              let firindex = 0;
-              this.salestabhid = false
-              this.saleslist.forEach(val=>{
-                this.saleslist[firindex]["recieptPay"] = recieptposts.filter(rv => (rv.studentname == val.studentname && rv.studentoragentName == val.studentoragentName)).reduce((a, b) => a + (b["paidAmount"] || 0), 0);
-                this.saleslist[firindex]["total"] = val.paidAmount + recieptposts.filter(rv =>(rv.studentname == val.studentname && rv.studentoragentName == val.studentoragentName)).reduce((a, b) => a + (b["paidAmount"] || 0), 0);
-                firindex++;
-              })
-
             })
             //
           })
@@ -93,6 +116,7 @@ export class SalesCommissionAddComponent implements OnInit {
       }
     }
     onChanges(): void{
+      this.values = []
       this.changeToatalam()
       this.Forms.get('todate').valueChanges.subscribe(val => {
         this.changeToatalam()

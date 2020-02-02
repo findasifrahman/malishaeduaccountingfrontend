@@ -6,6 +6,7 @@ import { salesVouchermodels } from '../../models/salesvouchermodels';
 import { salesrecieptmodels } from '../../models/salesrecieptmodels';
 import { salescommissionmodels } from '../../models/salescommissionmodels';
 import { purchasemodels } from '../../models/purchasemodels'
+import { salesReturnmodels } from '../../models/salesreturnmodels'
 const routes: Routes = [
   {
     //path: '',component: AdminlayoutComponent ,children:[]
@@ -14,7 +15,7 @@ const routes: Routes = [
 @NgModule({
   declarations:[],
   imports: [CommonModule,FormsModule,//RouterModule.forChild(routes),
-   ReactiveFormsModule, salesVouchermodels, purchasemodels, salescommissionmodels,salesrecieptmodels],
+   ReactiveFormsModule, salesVouchermodels, purchasemodels, salescommissionmodels,salesrecieptmodels,salesReturnmodels],
   exports: []
  })
 

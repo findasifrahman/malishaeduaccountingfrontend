@@ -8,8 +8,8 @@ import { salesrecieptmodels } from '../../../../models/salesrecieptmodels';
 import { ClientGroupService } from '../../../settingsComponents/NewClientGroup/client-group.service';
 import { ClientService } from '../../../settingsComponents/NewClient/client.service'
 import { LoginService } from '../../../login/login.service'
-import { SalesVoucherService } from '../../newSalesVoucher/sales-voucher.service';
-
+//import { SalesVoucherService } from '../../newSalesVoucher/sales-voucher.service';
+import {  SalesReturnService  } from '../../newSalesReturn/sales-return.service';
 @Component({
   selector: 'app-sales-reciept-add',
   templateUrl: './sales-reciept-add.component.html',
@@ -23,8 +23,9 @@ export class SalesRecieptAddComponent implements OnInit {
   studentlist: any[];
   selectsearchval1: string;
   selectsearchval3: string;
+  moneyunit: string = ""
   constructor(private salesRecieptservice:  SalesRecieptService ,private snackBar: MatSnackBar,
-    private formBuilder: FormBuilder, private salesvocherservice: SalesVoucherService,
+    private formBuilder: FormBuilder, private salesReturnservice:  SalesReturnService,
     private clientgroupService: ClientGroupService,private clientService: ClientService, private router: Router,
     private srModels:salesrecieptmodels, private loginService:LoginService) { }
     private formatDate(date) {
@@ -52,21 +53,26 @@ export class SalesRecieptAddComponent implements OnInit {
         currentdues: 0,
         paidAmount:0
       });
-      this.salesvocherservice.getbyclientstudent(this.selectsearchval1,val).subscribe((voucherposts) => {
+      this.clientService.getbyclientstudent(this.selectsearchval1,val).subscribe((voucherposts) => {
         this.salesRecieptservice.getbyclientstudent(this.selectsearchval1,val).subscribe(recieptposts =>{
-
-          let ta = 0;
-          let pa = 0; //paid amount
-          voucherposts.forEach(function (value) {
-              ta = ta + value.packageAmount,
-              pa = pa + value.paidAmount
-          });
-          recieptposts.forEach(function(value){
-              pa = pa + value.paidAmount
-          })
-          this.Forms.patchValue({
-            prevdues: ta - pa,
-          });
+          this.salesReturnservice.getbyclientstudent(this.selectsearchval1,val).subscribe(returnposts =>{
+              let ta = 0;
+              let pa = 0; //paid amount
+              let ra = 0;// return amount
+              voucherposts.forEach(function (value) {
+                  ta = ta + value.packageAmount
+              });
+              recieptposts.forEach(function(value){
+                  pa = pa + value.paidAmount
+              })
+              returnposts.forEach(val =>{
+                ra = ra + val.returnAmount
+              })
+              this.Forms.patchValue({
+                prevdues: (ta + ra) - pa,
+              });
+              this.moneyunit = voucherposts[0].unit
+            })
         })
       });
     }

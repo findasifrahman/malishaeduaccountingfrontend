@@ -84,6 +84,9 @@ import { UniversityAddComponent } from './settingsComponents/NewUniversity/unive
 import { SalesTableComponent } from './reports/tables/sales-table/sales-table.component';
 import { DegreeListComponent } from './settingsComponents/NewDegree/degree-list/degree-list.component';
 import { DegreeAddComponent } from './settingsComponents/NewDegree/degree-add/degree-add.component';
+import { SalesReturnAddComponent } from './accountsComponents/newSalesReturn/sales-return-add/sales-return-add.component';
+import { SalesReturnEditComponent } from './accountsComponents/newSalesReturn/sales-return-edit/sales-return-edit.component';
+import { SalesReturnListComponent } from './accountsComponents/newSalesReturn/sales-return-list/sales-return-list.component';
 
 const routes: Routes = [
 
@@ -278,6 +281,18 @@ const routes: Routes = [
         expectedRole: ['admin']
       }},
 
+      { path: 'salesreturn/add', component: SalesReturnAddComponent,canActivate: [RoleGuard],
+      data: {
+        expectedRole: ['admin']
+      }},
+      { path: 'salesreturn/list', component: SalesReturnListComponent,canActivate: [RoleGuard],
+      data: {
+        expectedRole: ['admin']
+      }},
+      { path: 'salesreturn/edit/:id', component: SalesReturnEditComponent,canActivate: [RoleGuard],
+      data: {
+        expectedRole: ['admin']
+      }},
       { path: 'major/add', component: MajorAddComponent,canActivate: [RoleGuard],
       data: {
         expectedRole: ['admin']
@@ -330,7 +345,7 @@ const routes: Routes = [
     PurposeListComponent, PurposeAddComponent, PurposeEditComponent, SalesCommissionEditComponent, SalesCommissionAddComponent, SalesCommissionListComponent,
     SalesRecieptAddComponent, SalesRecieptEditComponent, SalesRecieptListComponent,
     MajorAddComponent, MajorListComponent, NationalityAddComponent, NationalityListComponent, UniversityListComponent, UniversityAddComponent, SalesTableComponent,
-    DegreeListComponent, DegreeAddComponent],
+    DegreeListComponent, DegreeAddComponent, SalesReturnAddComponent, SalesReturnEditComponent, SalesReturnListComponent],
 
   imports: [CommonModule,FormsModule,RouterModule.forChild(routes),SharedComponentmoduleModule,
     ReactiveFormsModule,HttpClientModule,CKEditorModule,SharedmodulesModule,
@@ -351,7 +366,7 @@ const routes: Routes = [
   PurposeListComponent, PurposeAddComponent, PurposeEditComponent, SalesCommissionEditComponent, SalesCommissionAddComponent, SalesCommissionListComponent,
   SalesRecieptAddComponent, SalesRecieptEditComponent, SalesRecieptListComponent,
   MajorAddComponent, MajorListComponent, NationalityAddComponent, NationalityListComponent, UniversityListComponent, UniversityAddComponent,
-  DegreeListComponent, DegreeAddComponent],
+  DegreeListComponent, DegreeAddComponent, SalesReturnAddComponent, SalesReturnEditComponent, SalesReturnListComponent],
  providers: [AuthGuard,RoleGuard]
 
 })

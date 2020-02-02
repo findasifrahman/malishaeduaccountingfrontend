@@ -27,6 +27,7 @@ export class ClientEditComponent implements OnInit {
   universitylist: any;
   degreelist: any;
   employeelist: any;
+  unitlist = ["RMB", "BDT", "USD"]
   Forms = this.climodels.modelForms;
   selectsearchval1: string;
   constructor(private climodels: clientmodels,private snackBar:MatSnackBar,private cgService: ClientGroupService,

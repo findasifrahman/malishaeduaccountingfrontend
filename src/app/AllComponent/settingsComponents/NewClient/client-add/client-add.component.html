@@ -8,12 +8,12 @@
           Client Add
         </ng-template>
         <app-select-search [formControlnam]="'clientgroupname'" [preVal]="selectsearchval1" (outputval)="SelectvalChanged1($event)"  [list]= "cglist"></app-select-search>
-         <!-- <mat-form-field floatLabel="options.value.floatLabel">
-            <input matInput placeholder="Agent Name" type="Text" formControlName="clientname" required>
-          </mat-form-field>
-          <mat-form-field floatLabel="options.value.floatLabel">
-            <input matInput placeholder="Agent Unique Id" type="Text" formControlName="clientId" required>
-          </mat-form-field> -->
+
+        <mat-form-field floatLabel="options.value.floatLabel">
+          <mat-label>date</mat-label>
+          <input matInput placeholder="Phone" type="date" formControlName="date" required>
+        </mat-form-field>
+
           <mat-form-field floatLabel="options.value.floatLabel">
             <input matInput placeholder="Student Address" type="Text" formControlName="address" >
           </mat-form-field>
@@ -104,9 +104,27 @@
               <mat-hint>Pick an Item</mat-hint>
             </mat-form-field>
 
-            <mat-form-field floatLabel="options.value.floatLabel">
-                <input matInput placeholder="Package Amount" type="number" formControlName="packageamount" required>
-            </mat-form-field>
+            <div class="row">
+              <div class="col-md-8 col-lg-8">
+                <mat-form-field floatLabel="options.value.floatLabel">
+                    <input matInput placeholder="Package Amount" type="number" formControlName="packageAmount" required>
+                </mat-form-field>
+              </div>
+              <div class="col-md-4 col-lg-4">
+                <mat-form-field>
+                  <mat-label>Unit</mat-label>
+                  <select matNativeControl formControlName="unit" name="unit" required>
+                    <option *ngFor="let car of unitlist" [value]="car">
+                      {{car}}
+                    </option>
+                  </select>
+                  <mat-error *ngIf="selectFormControl.hasError('required')">
+                    This field is required
+                  </mat-error>
+                  <mat-hint>Pick an Item</mat-hint>
+                </mat-form-field>
+              </div>
+            </div>
           <br/>
           <div class="input-group btn-group">
             <button type="submit" (click)="FormSubmit()" class="form-control btn" style="height:40px;width:425px;background-color:black;color:whitesmoke" [disabled]="!Forms.valid">Submit</button>
